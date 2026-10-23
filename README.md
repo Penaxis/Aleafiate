@@ -6,6 +6,7 @@ Fonts load from Google Fonts when online (falls back to Georgia / system font of
 ## Structure
 - index.html — Home
 - about.html — About
+- home-v2.html — Alternative home page (self-contained: its CSS and JS are inline; uses the shared js/vendor/ libraries)
 - css/style.css — all styles (colours & fonts at the top in :root)
 - js/main.js — all animations (driven by data-attributes, see comment at top)
 - js/vendor/ — GSAP 3.13 (ScrollTrigger, SplitText, Draggable) + Lenis

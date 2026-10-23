@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halden — Skin &amp; Wellness Studio</title>
+<meta name="description" content="Halden is a skin and wellness studio offering calm, considered treatments.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   TOKENS — change colours / fonts here
+   ========================================================= */
+:root{
+  --bone:#F4F1EA;
+  --sand:#E9E3D7;
+  --stone:#D8CFBF;
+  --moss:#2F3A2F;
+  --moss-2:#46543F;
+  --sage:#8E9C82;
+  --clay:#B8835B;
+  --ink:#1C211C;
+  --muted:#5E655B;
+  --white:#fff;
+  --serif:"Fraunces", Georgia, serif;
+  --sans:"Manrope", system-ui, sans-serif;
+  --gutter:clamp(16px,4vw,64px);
+  --radius:18px;
+  --ease:cubic-bezier(.65,.05,.36,1);
+}
+
+/* =========================================================
+   BASE
+   ========================================================= */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+body{background:var(--bone);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:300;margin:0;line-height:1.05;letter-spacing:-.02em}
+p{margin:0}
+.container{width:100%;max-width:1440px;margin:0 auto;padding:0 var(--gutter)}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--clay)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* =========================================================
+   IMAGE PLACEHOLDERS
+   Replace:  <img src="" ...>  →  <img src="images/your-file.jpg" ...>
+   The label + gradient disappear automatically once an image loads.
+   ========================================================= */
+.media{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--stone),var(--sand) 55%,#cfc4b1)}
+.media::after{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:14px 18px;font:500 11px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:rgba(28,33,28,.45);pointer-events:none}
+.media.has-img::after{display:none}
+.media img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.media img[src=""]{opacity:0}
+
+/* =========================================================
+   BUTTONS — letter-roll hover
+   ========================================================= */
+.btn{--bg:var(--moss);--fg:var(--bone);--line:var(--moss);position:relative;display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 26px;border-radius:999px;background:var(--bg);color:var(--fg);border:1px solid var(--line);font:500 15px/1 var(--sans);overflow:hidden;isolation:isolate;cursor:pointer;transition:color .5s var(--ease),border-color .5s var(--ease)}
+.btn--ghost{--bg:transparent;--fg:var(--ink);--line:rgba(28,33,28,.35)}
+.btn--light{--bg:var(--bone);--fg:var(--ink);--line:var(--bone)}
+.btn__fill{position:absolute;left:var(--x,50%);top:var(--y,50%);width:0;height:0;border-radius:50%;background:var(--clay);transform:translate(-50%,-50%);z-index:-1;transition:width .6s var(--ease),height .6s var(--ease)}
+.btn:hover .btn__fill{width:260%;height:600%}
+.btn:hover{--line:var(--clay);color:var(--white)}
+.btn__label{position:relative;display:block;overflow:hidden;line-height:1.2}
+.btn__text{display:block;white-space:nowrap}
+.btn__text--clone{position:absolute;inset:0}
+.btn__char{display:inline-block;will-change:transform}
+.btn__dot{width:6px;height:6px;border-radius:50%;background:currentColor;transition:transform .5s var(--ease)}
+.btn:hover .btn__dot{transform:scale(1.8)}
+.btn__arrow{width:14px;height:14px;transition:transform .5s var(--ease)}
+.btn:hover .btn__arrow{transform:rotate(45deg)}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;padding:18px var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:24px;transition:transform .6s var(--ease),background .4s,backdrop-filter .4s}
+.nav.is-hidden{transform:translateY(-110%)}
+.nav.is-solid{background:rgba(244,241,234,.82);backdrop-filter:blur(12px)}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:22px;letter-spacing:-.01em}
+.logo__mark{width:28px;height:28px}
+.nav__links{display:flex;gap:30px;font-size:14px}
+.nav__links a{position:relative}
+.nav__links a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.nav__links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav__right{display:flex;align-items:center;gap:22px;font-size:14px}
+.nav .btn{height:44px;padding:0 20px;font-size:14px}
+.nav__burger{display:none;width:44px;height:44px;border-radius:50%;border:1px solid rgba(28,33,28,.3);background:transparent;position:relative;cursor:pointer}
+.nav__burger span{position:absolute;left:13px;right:13px;height:1px;background:var(--ink);transition:transform .5s var(--ease),top .5s var(--ease)}
+.nav__burger span:nth-child(1){top:18px}.nav__burger span:nth-child(2){top:25px}
+.menu-open .nav__burger span:nth-child(1){top:21px;transform:rotate(45deg)}
+.menu-open .nav__burger span:nth-child(2){top:21px;transform:rotate(-45deg)}
+.mobile-menu{position:fixed;inset:0;z-index:40;background:var(--moss);color:var(--bone);display:flex;flex-direction:column;justify-content:center;padding:0 var(--gutter);clip-path:inset(0 0 100% 0);transition:clip-path .8s var(--ease)}
+.menu-open .mobile-menu{clip-path:inset(0 0 0 0)}
+.menu-open .nav{color:var(--bone)}
+.menu-open .nav__burger{border-color:rgba(244,241,234,.4)}
+.menu-open .nav__burger span{background:var(--bone)}
+.mobile-menu a{font-family:var(--serif);font-size:44px;line-height:1.3;display:block;transform:translateY(40px);opacity:0;transition:transform .8s var(--ease),opacity .8s}
+.menu-open .mobile-menu a{transform:none;opacity:1}
+.menu-open .mobile-menu a:nth-child(2){transition-delay:.06s}.menu-open .mobile-menu a:nth-child(3){transition-delay:.12s}.menu-open .mobile-menu a:nth-child(4){transition-delay:.18s}
+
+/* =========================================================
+   1. HERO — split screen that expands on scroll
+   ========================================================= */
+.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;background:var(--bone)}
+.hero__content{position:absolute;inset:0 50% 0 0;display:flex;flex-direction:column;justify-content:center;padding:120px var(--gutter) 60px;z-index:2}
+.hero__title{font-size:clamp(44px,5.6vw,92px)}
+.hero__title em{font-style:italic;color:var(--moss-2)}
+.hero__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.hero__foot{position:absolute;left:var(--gutter);bottom:40px;max-width:300px;font-size:14px;color:var(--muted)}
+.hero__media{position:absolute;top:0;right:0;bottom:0;width:50%;z-index:3}
+.hero__media .media{position:absolute;inset:0}
+.hero__shade{position:absolute;inset:0;background:rgba(20,26,20,.45);opacity:0;z-index:1}
+.hero__statement{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 var(--gutter);z-index:2;color:var(--bone);font-size:clamp(34px,4.6vw,72px);pointer-events:none}
+.hero__scroll{position:absolute;right:28px;bottom:32px;z-index:4;color:var(--bone);font-size:12px;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.hero__scroll i{display:block;width:1px;height:40px;background:rgba(244,241,234,.4);position:relative;overflow:hidden}
+.hero__scroll i::after{content:"";position:absolute;inset:0;background:var(--bone);animation:scrollLine 1.8s var(--ease) infinite}
+@keyframes scrollLine{0%{transform:translateY(-100%)}60%,100%{transform:translateY(100%)}}
+
+/* =========================================================
+   2. INTRO STATEMENT — word-by-word scrub
+   ========================================================= */
+.intro{position:relative;padding:clamp(100px,16vw,200px) 0;overflow:hidden;background:var(--bone)}
+.intro__orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;pointer-events:none}
+.intro__orb--a{width:420px;height:420px;background:#dfe3d4;left:-120px;top:10%}
+.intro__orb--b{width:520px;height:520px;background:#efe0cf;right:-160px;bottom:-10%}
+.intro__text{position:relative;max-width:1100px;margin:0 auto;text-align:center;font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.4vw,52px);line-height:1.18;letter-spacing:-.015em}
+.intro__features{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,200px));justify-content:center;gap:clamp(20px,5vw,72px);margin-top:72px;text-align:center;font-size:15px}
+.intro__icon{width:44px;height:44px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;background:var(--moss);color:var(--bone)}
+.intro__icon svg{width:20px;height:20px}
+
+/* =========================================================
+   3. VALUES — sticky split
+   ========================================================= */
+.values{display:grid;grid-template-columns:1fr 1fr;background:var(--sand)}
+.values__stack{display:flex;flex-direction:column}
+.value-card{position:relative;height:100vh;min-height:560px}
+.value-card .media{position:absolute;inset:0}
+.value-card .media img{transform:scale(1.15)}
+.value-card__cap{position:absolute;left:clamp(20px,4vw,56px);right:clamp(20px,4vw,56px);bottom:clamp(24px,5vw,56px);z-index:2;color:var(--bone);max-width:360px}
+.value-card__cap h3{font-size:28px;margin-bottom:10px}
+.value-card__cap p{font-size:15px;opacity:.85}
+.value-card__num{position:absolute;top:28px;left:clamp(20px,4vw,56px);z-index:2;color:var(--bone);font-size:13px;letter-spacing:.14em}
+.value-card::before{content:"";position:absolute;inset:40% 0 0 0;z-index:1;background:linear-gradient(to top,rgba(20,26,20,.7),transparent)}
+.values__sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(24px,7vw,120px)}
+.values__sticky h2{font-size:clamp(38px,4vw,64px);margin:18px 0 22px}
+.values__sticky p{max-width:420px;color:var(--muted)}
+.values__progress{display:flex;gap:8px;margin-top:40px}
+.values__progress span{height:2px;flex:0 0 40px;background:rgba(28,33,28,.15);position:relative;overflow:hidden}
+.values__progress span i{position:absolute;inset:0;background:var(--moss);transform:scaleX(0);transform-origin:left}
+
+/* =========================================================
+   4. TREATMENTS — expanding cards
+   ========================================================= */
+.section{padding:clamp(90px,12vw,160px) 0}
+.section__head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:56px;flex-wrap:wrap}
+.section__head h2{font-size:clamp(40px,5vw,80px);margin-top:16px}
+.section__head p{max-width:380px;color:var(--muted)}
+.treatments__row{display:flex;gap:12px;height:clamp(420px,62vh,640px)}
+.t-card{position:relative;flex:1;min-width:0;border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:flex .9s var(--ease);color:var(--bone)}
+.t-card.is-active{flex:4.2}
+.t-card .media{position:absolute;inset:0}
+.t-card .media img{transition:transform 1.2s var(--ease)}
+.t-card.is-active .media img{transform:scale(1.04)}
+.t-card::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(20,26,20,.7),rgba(20,26,20,.05) 60%)}
+.t-card__num{position:absolute;top:22px;left:24px;z-index:2;font-size:13px;letter-spacing:.1em}
+.t-card__arrow{position:absolute;top:16px;right:16px;z-index:2;width:44px;height:44px;border-radius:50%;border:1px solid rgba(244,241,234,.6);display:grid;place-items:center;transition:transform .7s var(--ease),background .5s}
+.t-card__arrow svg{width:16px;height:16px}
+.t-card.is-active .t-card__arrow{transform:rotate(45deg);background:var(--bone);color:var(--ink)}
+.t-card__body{position:absolute;left:24px;right:24px;bottom:24px;z-index:2}
+.t-card__title{font-family:var(--serif);font-size:26px;white-space:nowrap}
+.t-card:not(.is-active) .t-card__title{writing-mode:vertical-rl;transform:rotate(180deg);font-size:22px}
+.t-card__desc{max-width:360px;margin-top:10px;font-size:15px;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .7s var(--ease)}
+.t-card.is-active .t-card__desc{opacity:.9;transform:none;transition-delay:.35s}
+.treatments__cta{display:flex;justify-content:center;margin-top:48px}
+
+/* =========================================================
+   5. OUTCOMES — clip-reveal grid
+   ========================================================= */
+.outcomes{background:var(--bone)}
+.outcomes__grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:clamp(160px,18vw,260px);gap:12px}
+.o-item{position:relative;border-radius:var(--radius);overflow:hidden;clip-path:inset(100% 0 0 0 round var(--radius))}
+.o-item .media{position:absolute;inset:-12% 0}
+.o-item:nth-child(1){grid-column:1/6;grid-row:span 2}
+.o-item:nth-child(2){grid-column:6/10}
+.o-item:nth-child(3){grid-column:10/13;grid-row:span 2}
+.o-item:nth-child(4){grid-column:6/8}
+.o-item:nth-child(5){grid-column:8/10}
+.o-tag{position:absolute;left:14px;bottom:14px;z-index:2;background:rgba(244,241,234,.92);padding:7px 12px;border-radius:999px;font-size:12px}
+
+/* =========================================================
+   6. SPACE — pinned horizontal gallery
+   ========================================================= */
+.space{background:var(--moss);color:var(--bone);overflow:hidden}
+.space__pin{height:100vh;display:flex;flex-direction:column;justify-content:center;gap:48px}
+.space__head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.space__head h2{font-size:clamp(40px,5vw,80px);margin-top:16px}
+.space .eyebrow{color:rgba(244,241,234,.7)}
+.space__head p{max-width:360px;opacity:.75}
+.space__track{display:flex;gap:20px;padding-left:var(--gutter);width:max-content}
+.space__item{flex:0 0 auto;width:clamp(280px,46vw,720px);height:clamp(240px,48vh,500px);border-radius:var(--radius);overflow:hidden}
+.space__item:nth-child(even){width:clamp(220px,30vw,460px)}
+.space__item .media{width:100%;height:100%;background:linear-gradient(135deg,#4c5a45,#3a463a)}
+.space__item .media::after{color:rgba(244,241,234,.5)}
+.space__item .media img{transform:scale(1.2)}
+.space__bar{height:1px;background:rgba(244,241,234,.2);margin:0 var(--gutter);position:relative}
+.space__bar i{position:absolute;inset:0;background:var(--bone);transform:scaleX(0);transform-origin:left}
+
+/* =========================================================
+   7. TEAM — draggable slider
+   ========================================================= */
+.team{overflow:hidden}
+.team__controls{display:flex;gap:10px}
+.round-btn{width:52px;height:52px;border-radius:50%;border:1px solid rgba(28,33,28,.3);background:transparent;display:grid;place-items:center;cursor:pointer;transition:background .4s,color .4s,border-color .4s}
+.round-btn:hover{background:var(--moss);color:var(--bone);border-color:var(--moss)}
+.round-btn svg{width:16px;height:16px}
+.team__viewport{cursor:grab;touch-action:pan-y}
+.team__viewport:active{cursor:grabbing}
+.team__track{display:flex;gap:16px;width:max-content;padding:0 var(--gutter)}
+.member{width:clamp(250px,24vw,340px);user-select:none}
+.member .media{aspect-ratio:3/4;border-radius:var(--radius)}
+.member .media img{transition:transform 1.1s var(--ease);pointer-events:none}
+.member:hover .media img{transform:scale(1.06)}
+.member h3{font-size:24px;margin-top:18px}
+.member p{font-size:14px;color:var(--muted);margin-top:4px}
+.team__cta{display:flex;justify-content:center;margin-top:56px}
+
+/* =========================================================
+   8. VOICES — vertical marquees
+   ========================================================= */
+.voices{background:var(--sand)}
+.voices__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:clamp(32px,6vw,96px);align-items:center}
+.voices h2{font-size:clamp(40px,5vw,80px);margin:16px 0 28px}
+.rating{display:flex;align-items:center;gap:18px;margin-top:32px}
+.rating__num{font-family:var(--serif);font-size:72px;line-height:1}
+.rating__stars{color:var(--clay);letter-spacing:3px}
+.rating p{font-size:14px;color:var(--muted)}
+.marquee{display:grid;grid-template-columns:1fr 1fr;gap:16px;height:640px;overflow:hidden;mask-image:linear-gradient(to bottom,transparent,#000 15%,#000 85%,transparent)}
+.marquee__col{display:flex;flex-direction:column;gap:16px;animation:marqueeUp 38s linear infinite}
+.marquee__col--down{animation-name:marqueeDown}
+.marquee:hover .marquee__col{animation-play-state:paused}
+@keyframes marqueeUp{to{transform:translateY(-50%)}}
+@keyframes marqueeDown{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+.quote{background:var(--bone);border-radius:var(--radius);padding:26px}
+.quote p{font-size:15px}
+.quote__who{display:flex;align-items:center;gap:12px;margin-top:20px}
+.quote__who .media{width:40px;height:40px;border-radius:50%}
+.quote__who .media::after{display:none}
+.quote__who b{display:block;font-weight:600;font-size:14px}
+.quote__who span{font-size:13px;color:var(--muted)}
+
+/* =========================================================
+   9. CTA
+   ========================================================= */
+.cta{position:relative;height:110vh;min-height:680px;overflow:hidden;display:flex;align-items:center}
+.cta__bg{position:absolute;inset:0}
+.cta__bg .media{position:absolute;inset:0}
+.cta__bg::after{content:"";position:absolute;inset:0;background:rgba(20,26,20,.35)}
+.cta__inner{position:relative;z-index:2;width:100%;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.cta__title{color:var(--bone);font-size:clamp(44px,6vw,100px);max-width:760px}
+.cta__card{background:var(--bone);border-radius:var(--radius);padding:28px;width:min(100%,380px);display:flex;flex-direction:column;gap:18px}
+.cta__card .media{aspect-ratio:16/10;border-radius:12px}
+.cta__card h3{font-size:26px}
+.cta__card p{font-size:15px;color:var(--muted)}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{background:var(--moss);color:var(--bone);padding:96px 0 32px;overflow:hidden}
+.footer__top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+.footer h4{font-family:var(--sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;opacity:.6;margin-bottom:18px}
+.footer li{list-style:none;margin-bottom:10px}
+.footer ul{padding:0;margin:0}
+.footer a{opacity:.85;transition:opacity .3s}.footer a:hover{opacity:1}
+.footer__news{display:flex;border-bottom:1px solid rgba(244,241,234,.3);margin-top:20px;max-width:340px}
+.footer__news input{flex:1;background:transparent;border:0;color:var(--bone);font:inherit;padding:12px 0;outline:none}
+.footer__news input::placeholder{color:rgba(244,241,234,.5)}
+.footer__news button{background:none;border:0;color:var(--bone);cursor:pointer}
+.footer__word{font-family:var(--serif);font-weight:300;font-size:clamp(90px,22vw,340px);line-height:.85;letter-spacing:-.04em;margin-top:80px;white-space:nowrap}
+.footer__bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:28px;font-size:13px;opacity:.6}
+
+/* split-text helpers */
+.split-line{overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 991px){
+  .nav__links,.nav__phone{display:none}
+  .nav__burger{display:block}
+  .nav__right .btn{display:none}
+  .hero{height:auto;min-height:0;padding-top:110px}
+  .hero__content{position:relative;inset:auto;padding:24px var(--gutter) 40px}
+  .hero__foot{position:static;margin-top:28px}
+  .hero__media{position:relative;width:100%;height:80vh}
+  .hero__statement,.hero__shade{display:none}
+  .values{grid-template-columns:1fr}
+  .values__sticky{position:relative;height:auto;padding:90px var(--gutter);order:-1}
+  .value-card{height:80vh}
+  .treatments__row{flex-direction:column;height:auto}
+  .t-card,.t-card.is-active{flex:none;height:120px}
+  .t-card.is-active{height:420px}
+  .t-card:not(.is-active) .t-card__title{writing-mode:horizontal-tb;transform:none}
+  .t-card.is-active .t-card__title{white-space:normal}
+  .outcomes__grid{grid-template-columns:1fr 1fr;grid-auto-rows:220px}
+  .o-item:nth-child(n){grid-column:auto;grid-row:auto}
+  .o-item:nth-child(1){grid-column:1/3}
+  .voices__grid{grid-template-columns:1fr}
+  .footer__top{grid-template-columns:1fr 1fr}
+}
+@media (max-width: 600px){
+  .intro__features{grid-template-columns:1fr}
+  .marquee{grid-template-columns:1fr;height:520px}
+  .marquee__col--down{display:none}
+  .footer__top{grid-template-columns:1fr}
+  .space__pin{height:auto;padding:90px 0}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .o-item{clip-path:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <a href="#top" class="logo" aria-label="Halden home">
+    <svg class="logo__mark" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="16" cy="16" r="14"/><path d="M16 5c-5 6-5 16 0 22M16 5c5 6 5 16 0 22M5 16h22"/></svg>
+    Halden
+  </a>
+  <nav class="nav__links" aria-label="Main">
+    <a href="#top">Home</a><a href="#values">Studio</a><a href="#treatments">Treatments</a><a href="#contact">Contact</a>
+  </nav>
+  <div class="nav__right">
+    <a href="tel:+10000000000" class="nav__phone">+1 (000) 000-0000</a>
+    <a href="#contact" class="btn btn--ghost" data-roll><span class="btn__fill"></span><span class="btn__label">Book a visit</span><span class="btn__dot"></span></a>
+    <button class="nav__burger" aria-label="Open menu"><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-menu" aria-hidden="true">
+  <a href="#top">Home</a><a href="#values">Studio</a><a href="#treatments">Treatments</a><a href="#contact">Contact</a>
+</div>
+
+<main id="top">
+
+<!-- ================= 1. HERO ================= -->
+<section class="hero" id="hero">
+  <div class="hero__content">
+    <span class="eyebrow" data-fade>Skin &amp; Wellness Studio</span>
+    <h1 class="hero__title" data-hero-title style="margin-top:22px">Quiet care for <em>skin</em> that feels like yours.</h1>
+    <div class="hero__actions" data-fade>
+      <a href="#treatments" class="btn btn--ghost" data-roll><span class="btn__fill"></span><span class="btn__label">View treatments</span></a>
+      <a href="#contact" class="btn" data-roll><span class="btn__fill"></span><span class="btn__label">Book a visit</span><span class="btn__dot"></span></a>
+    </div>
+    <p class="hero__foot" data-fade>Slow, evidence-led treatments in a calm space — built around how your skin actually behaves.</p>
+  </div>
+  <div class="hero__media" data-hero-media>
+    <div class="media" data-label="Hero image — portrait 1600×1800"><img src="" alt="" data-hero-img></div>
+    <div class="hero__shade" data-hero-shade></div>
+    <h2 class="hero__statement"><span data-hero-statement>Less noise. More you.</span></h2>
+    <div class="hero__scroll"><i></i>Scroll</div>
+  </div>
+</section>
+
+<!-- ================= 2. INTRO ================= -->
+<section class="intro">
+  <div class="intro__orb intro__orb--a" data-speed="-0.2"></div>
+  <div class="intro__orb intro__orb--b" data-speed="0.25"></div>
+  <div class="container">
+    <p class="intro__text" data-scrub-words>We believe good skin is rarely about doing more. It comes from listening first, choosing fewer and better treatments, and giving each one the time it needs to work.</p>
+    <div class="intro__features" data-stagger>
+      <div><div class="intro__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>Unhurried appointments, every time.</div>
+      <div><div class="intro__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c4 4 6 7 6 10a6 6 0 1 1-12 0c0-3 2-6 6-10z"/></svg></div>Formulas chosen for your skin type.</div>
+      <div><div class="intro__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg></div>Plans you can keep up at home.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. VALUES (sticky split) ================= -->
+<section class="values" id="values">
+  <div class="values__stack">
+    <article class="value-card" data-value>
+      <span class="value-card__num">01 / 04</span>
+      <div class="media" data-label="Value image 1 — 1200×1600"><img src="" alt=""></div>
+      <div class="value-card__cap"><h3>Assessment before action</h3><p>Every first visit starts with a close look and a long conversation — no treatment on day one unless it's right.</p></div>
+    </article>
+    <article class="value-card" data-value>
+      <span class="value-card__num">02 / 04</span>
+      <div class="media" data-label="Value image 2 — 1200×1600"><img src="" alt=""></div>
+      <div class="value-card__cap"><h3>A room that slows you down</h3><p>Soft light, warm materials and no rush. Stress shows up on skin, so we design it out.</p></div>
+    </article>
+    <article class="value-card" data-value>
+      <span class="value-card__num">03 / 04</span>
+      <div class="media" data-label="Value image 3 — 1200×1600"><img src="" alt=""></div>
+      <div class="value-card__cap"><h3>Clinical, not clinical-feeling</h3><p>Medical-grade tools and protocols, delivered with a gentle hand and plain explanations.</p></div>
+    </article>
+    <article class="value-card" data-value>
+      <span class="value-card__num">04 / 04</span>
+      <div class="media" data-label="Value image 4 — 1200×1600"><img src="" alt=""></div>
+      <div class="value-card__cap"><h3>Results that age well</h3><p>We aim for skin that looks rested and healthy in five years, not just next week.</p></div>
+    </article>
+  </div>
+  <div class="values__sticky">
+    <span class="eyebrow">How we work</span>
+    <h2 data-split>Four ideas behind every appointment.</h2>
+    <p data-fade-up>They shape how we plan, how we treat, and how we follow up — whether you visit once or every month.</p>
+    <div class="values__progress"><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span></div>
+  </div>
+</section>
+
+<!-- ================= 4. TREATMENTS ================= -->
+<section class="section" id="treatments">
+  <div class="container">
+    <div class="section__head">
+      <div><span class="eyebrow">Treatments</span><h2 data-split>What we offer</h2></div>
+      <p data-fade-up>A short, considered menu. Hover or tap a card to learn more.</p>
+    </div>
+    <div class="treatments__row" data-stagger>
+      <article class="t-card is-active">
+        <div class="media" data-label="Treatment 1 — 1600×1000"><img src="" alt=""></div>
+        <span class="t-card__num">01</span>
+        <span class="t-card__arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></span>
+        <div class="t-card__body"><h3 class="t-card__title">Signature Facial</h3><p class="t-card__desc">A 75-minute reset: double cleanse, gentle exfoliation, lymphatic massage and a mask matched to your skin that day.</p></div>
+      </article>
+      <article class="t-card">
+        <div class="media" data-label="Treatment 2 — 1600×1000"><img src="" alt=""></div>
+        <span class="t-card__num">02</span>
+        <span class="t-card__arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></span>
+        <div class="t-card__body"><h3 class="t-card__title">Light Peel</h3><p class="t-card__desc">Low-strength acids to refine texture and brighten tone, with almost no downtime.</p></div>
+      </article>
+      <article class="t-card">
+        <div class="media" data-label="Treatment 3 — 1600×1000"><img src="" alt=""></div>
+        <span class="t-card__num">03</span>
+        <span class="t-card__arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></span>
+        <div class="t-card__body"><h3 class="t-card__title">Microneedling</h3><p class="t-card__desc">Supports collagen for scarring and fine lines, delivered as a planned course of sessions.</p></div>
+      </article>
+      <article class="t-card">
+        <div class="media" data-label="Treatment 4 — 1600×1000"><img src="" alt=""></div>
+        <span class="t-card__num">04</span>
+        <span class="t-card__arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></span>
+        <div class="t-card__body"><h3 class="t-card__title">LED Therapy</h3><p class="t-card__desc">Calming red and blue light sessions — a good add-on or a quiet 30 minutes on its own.</p></div>
+      </article>
+      <article class="t-card">
+        <div class="media" data-label="Treatment 5 — 1600×1000"><img src="" alt=""></div>
+        <span class="t-card__num">05</span>
+        <span class="t-card__arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></span>
+        <div class="t-card__body"><h3 class="t-card__title">Body Ritual</h3><p class="t-card__desc">Full-body exfoliation and massage using warm oils. Skin from the neck down deserves attention too.</p></div>
+      </article>
+    </div>
+    <div class="treatments__cta"><a href="#contact" class="btn btn--ghost" data-roll><span class="btn__fill"></span><span class="btn__label">See the full menu</span><svg class="btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></a></div>
+  </div>
+</section>
+
+<!-- ================= 5. OUTCOMES ================= -->
+<section class="section outcomes">
+  <div class="container">
+    <div class="section__head">
+      <div><span class="eyebrow">Outcomes</span><h2 data-split>Gradual, visible, yours.</h2></div>
+      <p data-fade-up>Real changes take a few weeks. Here's what steady care can look like.</p>
+    </div>
+    <div class="outcomes__grid">
+      <div class="o-item"><div class="media" data-label="Outcome 1"><img src="" alt=""></div><span class="o-tag">Texture</span></div>
+      <div class="o-item"><div class="media" data-label="Outcome 2"><img src="" alt=""></div><span class="o-tag">Hydration</span></div>
+      <div class="o-item"><div class="media" data-label="Outcome 3"><img src="" alt=""></div><span class="o-tag">Tone</span></div>
+      <div class="o-item"><div class="media" data-label="Outcome 4"><img src="" alt=""></div><span class="o-tag">Calm</span></div>
+      <div class="o-item"><div class="media" data-label="Outcome 5"><img src="" alt=""></div><span class="o-tag">Glow</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. SPACE (horizontal) ================= -->
+<section class="space">
+  <div class="space__pin">
+    <div class="container space__head">
+      <div><span class="eyebrow">The studio</span><h2 data-split>A space made for slowing down</h2></div>
+      <p data-fade-up>Natural light, soft textures and treatment rooms with real doors.</p>
+    </div>
+    <div class="space__track" data-h-track>
+      <div class="space__item"><div class="media" data-label="Studio 1 — 1600×1100"><img src="" alt=""></div></div>
+      <div class="space__item"><div class="media" data-label="Studio 2 — 900×1100"><img src="" alt=""></div></div>
+      <div class="space__item"><div class="media" data-label="Studio 3 — 1600×1100"><img src="" alt=""></div></div>
+      <div class="space__item"><div class="media" data-label="Studio 4 — 900×1100"><img src="" alt=""></div></div>
+      <div class="space__item"><div class="media" data-label="Studio 5 — 1600×1100"><img src="" alt=""></div></div>
+    </div>
+    <div class="space__bar"><i data-h-bar></i></div>
+  </div>
+</section>
+
+<!-- ================= 7. TEAM (draggable) ================= -->
+<section class="section team">
+  <div class="container">
+    <div class="section__head">
+      <div><span class="eyebrow">Practitioners</span><h2 data-split>The hands you're in</h2></div>
+      <div class="team__controls">
+        <button class="round-btn" data-team-prev aria-label="Previous"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 3L5 8l5 5"/></svg></button>
+        <button class="round-btn" data-team-next aria-label="Next"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 3l5 5-5 5"/></svg></button>
+      </div>
+    </div>
+  </div>
+  <div class="team__viewport" data-team-viewport>
+    <div class="team__track" data-team-track>
+      <article class="member"><div class="media" data-label="Team photo 1 — 900×1200"><img src="" alt=""></div><h3>Name Surname</h3><p>Lead Aesthetician</p></article>
+      <article class="member"><div class="media" data-label="Team photo 2 — 900×1200"><img src="" alt=""></div><h3>Name Surname</h3><p>Dermal Therapist</p></article>
+      <article class="member"><div class="media" data-label="Team photo 3 — 900×1200"><img src="" alt=""></div><h3>Name Surname</h3><p>Nurse Practitioner</p></article>
+      <article class="member"><div class="media" data-label="Team photo 4 — 900×1200"><img src="" alt=""></div><h3>Name Surname</h3><p>Massage Therapist</p></article>
+      <article class="member"><div class="media" data-label="Team photo 5 — 900×1200"><img src="" alt=""></div><h3>Name Surname</h3><p>Skin Consultant</p></article>
+      <article class="member"><div class="media" data-label="Team photo 6 — 900×1200"><img src="" alt=""></div><h3>Name Surname</h3><p>Studio Manager</p></article>
+    </div>
+  </div>
+  <div class="team__cta"><a href="#contact" class="btn btn--ghost" data-roll><span class="btn__fill"></span><span class="btn__label">Meet everyone</span><svg class="btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></a></div>
+</section>
+
+<!-- ================= 8. VOICES ================= -->
+<section class="section voices">
+  <div class="container voices__grid">
+    <div>
+      <span class="eyebrow">Client notes</span>
+      <h2 data-split>In their words</h2>
+      <p data-fade-up style="color:var(--muted);max-width:380px">Replace these with real reviews from your clients before going live.</p>
+      <div class="rating" data-fade-up>
+        <span class="rating__num" data-count="4.9">0.0</span>
+        <div><div class="rating__stars">★★★★★</div><p>Average client rating</p></div>
+      </div>
+    </div>
+    <div class="marquee">
+      <div class="marquee__col" data-marquee>
+        <div class="quote"><p>Client review text goes here. Keep it to two or three sentences for the best rhythm.</p><div class="quote__who"><div class="media"><img src="" alt=""></div><div><b>Client Name</b><span>Role or city</span></div></div></div>
+        <div class="quote"><p>Client review text goes here. A shorter quote also works nicely in this column.</p><div class="quote__who"><div class="media"><img src="" alt=""></div><div><b>Client Name</b><span>Role or city</span></div></div></div>
+        <div class="quote"><p>Client review text goes here. Mention a specific treatment for credibility.</p><div class="quote__who"><div class="media"><img src="" alt=""></div><div><b>Client Name</b><span>Role or city</span></div></div></div>
+      </div>
+      <div class="marquee__col marquee__col--down" data-marquee>
+        <div class="quote"><p>Client review text goes here. This column scrolls in the opposite direction.</p><div class="quote__who"><div class="media"><img src="" alt=""></div><div><b>Client Name</b><span>Role or city</span></div></div></div>
+        <div class="quote"><p>Client review text goes here. Hovering pauses both columns so people can read.</p><div class="quote__who"><div class="media"><img src="" alt=""></div><div><b>Client Name</b><span>Role or city</span></div></div></div>
+        <div class="quote"><p>Client review text goes here. Add as many as you like — the loop duplicates itself.</p><div class="quote__who"><div class="media"><img src="" alt=""></div><div><b>Client Name</b><span>Role or city</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9. CTA ================= -->
+<section class="cta" id="contact">
+  <div class="cta__bg"><div class="media" data-label="CTA background — 2400×1600"><img src="" alt="" data-cta-img></div></div>
+  <div class="container cta__inner">
+    <h2 class="cta__title" data-split>Your first visit is a conversation.</h2>
+    <div class="cta__card" data-cta-card>
+      <div class="media" data-label="Card image — 800×500"><img src="" alt=""></div>
+      <h3>Book a consultation</h3>
+      <p>Forty-five minutes, no pressure, and a written plan to take home.</p>
+      <a href="#" class="btn" data-roll><span class="btn__fill"></span><span class="btn__label">Book a visit</span><span class="btn__dot"></span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div>
+        <a href="#top" class="logo"><svg class="logo__mark" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="16" cy="16" r="14"/><path d="M16 5c-5 6-5 16 0 22M16 5c5 6 5 16 0 22M5 16h22"/></svg>Halden</a>
+        <p style="margin-top:18px;opacity:.7;max-width:300px">Notes on skin, seasons and new treatments — once a month.</p>
+        <form class="footer__news" onsubmit="event.preventDefault()"><input type="email" placeholder="Email address" aria-label="Email address"><button aria-label="Subscribe">→</button></form>
+      </div>
+      <div><h4>Studio</h4><ul><li><a href="#values">How we work</a></li><li><a href="#treatments">Treatments</a></li><li><a href="#">Practitioners</a></li></ul></div>
+      <div><h4>Visit</h4><ul><li>Street address</li><li>City, Postcode</li><li>Mon–Sat, 9–7</li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="tel:+10000000000">+1 (000) 000-0000</a></li><li><a href="mailto:hello@example.com">hello@example.com</a></li><li><a href="#">Instagram</a></li></ul></div>
+    </div>
+    <div class="footer__word" data-footer-word>Halden</div>
+    <div class="footer__bottom"><span>© <span data-year></span> Halden Studio</span><span>Privacy · Terms</span></div>
+  </div>
+</footer>
+
+<!-- ================= LIBRARIES ================= -->
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/SplitText.min.js"></script>
+<script src="js/vendor/Draggable.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+
+<script>
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+
+  /* Image placeholders: hide label once a real image loads */
+  $$('.media img').forEach(img => {
+    const mark = () => img.getAttribute('src') && img.naturalWidth && img.closest('.media').classList.add('has-img');
+    img.complete ? mark() : img.addEventListener('load', mark);
+  });
+  $('[data-year]').textContent = new Date().getFullYear();
+
+  /* Mobile menu */
+  $('.nav__burger').addEventListener('click', () => document.body.classList.toggle('menu-open'));
+  $$('.mobile-menu a').forEach(a => a.addEventListener('click', () => document.body.classList.remove('menu-open')));
+
+  /* Treatments: expanding cards (hover on desktop, tap on touch) */
+  const cards = $$('.t-card');
+  const activate = c => cards.forEach(x => x.classList.toggle('is-active', x === c));
+  cards.forEach(c => { c.addEventListener('mouseenter', () => activate(c)); c.addEventListener('click', () => activate(c)); });
+
+  /* Testimonials marquee: duplicate content for a seamless loop */
+  $$('[data-marquee]').forEach(col => col.innerHTML += col.innerHTML);
+
+  if (!window.gsap) return;
+  gsap.registerPlugin(ScrollTrigger, SplitText, Draggable);
+
+  /* ---------- Button letter-roll + cursor-follow fill ---------- */
+  $$('[data-roll]').forEach(btn => {
+    const label = $('.btn__label', btn);
+    const text = label.textContent.trim();
+    btn.setAttribute('aria-label', text);
+    const make = cls => `<span class="btn__text ${cls}" aria-hidden="true">${[...text].map(ch => `<span class="btn__char">${ch === ' ' ? '&nbsp;' : ch}</span>`).join('')}</span>`;
+    label.innerHTML = make('') + make('btn__text--clone');
+    const [a, b] = $$('.btn__text', label).map(t => $$('.btn__char', t));
+    gsap.set(b, { yPercent: 110 });
+    const roll = dir => {
+      gsap.to(a, { yPercent: dir ? -110 : 0, duration: .5, ease: 'power3.inOut', stagger: .018, overwrite: true });
+      gsap.to(b, { yPercent: dir ? 0 : 110, duration: .5, ease: 'power3.inOut', stagger: .018, overwrite: true });
+    };
+    const fill = $('.btn__fill', btn);
+    btn.addEventListener('mouseenter', e => {
+      const r = btn.getBoundingClientRect();
+      fill && (btn.style.setProperty('--x', `${e.clientX - r.left}px`), btn.style.setProperty('--y', `${e.clientY - r.top}px`));
+      roll(true);
+    });
+    btn.addEventListener('mouseleave', () => roll(false));
+  });
+
+  if (reduce) { gsap.set('.o-item', { clipPath: 'none' }); return; }
+
+  /* ---------- Lenis smooth scroll ---------- */
+  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const id = a.getAttribute('href'); if (id.length < 2) return;
+    const el = $(id); if (!el) return;
+    e.preventDefault(); lenis.scrollTo(el, { offset: 0, duration: 1.6 });
+  }));
+
+  /* ---------- Nav: hide on scroll down, show on scroll up ---------- */
+  const nav = $('#nav'); let lastY = 0;
+  lenis.on('scroll', ({ scroll }) => {
+    nav.classList.toggle('is-hidden', scroll > lastY && scroll > 200 && !document.body.classList.contains('menu-open'));
+    nav.classList.toggle('is-solid', scroll > 40);
+    lastY = scroll;
+  });
+
+  document.fonts.ready.then(() => {
+    const mm = gsap.matchMedia();
+
+    /* ---------- Hero intro (on load) ---------- */
+    const heroSplit = SplitText.create('[data-hero-title]', { type: 'lines,words', mask: 'lines', linesClass: 'split-line' });
+    const intro = gsap.timeline({ defaults: { ease: 'expo.out' } });
+    intro.from('[data-hero-media]', { clipPath: 'inset(0 0 0 100%)', duration: 1.6, ease: 'expo.inOut' })
+         .from('[data-hero-img]', { scale: 1.3, duration: 2 }, '<')
+         .from(heroSplit.words, { yPercent: 110, duration: 1.2, stagger: .04 }, '-=1.1')
+         .from('.hero [data-fade]', { y: 24, autoAlpha: 0, duration: 1, stagger: .12 }, '-=.9')
+         .from('#nav', { y: -30, autoAlpha: 0, duration: 1 }, '<');
+
+    /* ---------- Hero: pin + expand image to full width ---------- */
+    mm.add('(min-width: 992px)', () => {
+      const st = SplitText.create('[data-hero-statement]', { type: 'chars,words' });
+      gsap.set(st.chars, { autoAlpha: 0, yPercent: 40 });
+      const tl = gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=160%', scrub: 1, pin: true } });
+      tl.to('.hero__content', { xPercent: -20, autoAlpha: 0, duration: 1, ease: 'none' }, 0)
+        .to('[data-hero-media]', { width: '100%', duration: 1, ease: 'power2.inOut' }, 0)
+        .to('[data-hero-img]', { scale: 1.12, duration: 1.6, ease: 'none' }, 0)
+        .to('[data-hero-shade]', { opacity: 1, duration: .6 }, .6)
+        .to(st.chars, { autoAlpha: 1, yPercent: 0, stagger: .025, duration: .4, ease: 'power2.out' }, .75);
+      return () => st.revert();
+    });
+
+    /* ---------- Generic heading reveal (lines slide up from mask) ---------- */
+    $$('[data-split]').forEach(el => {
+      SplitText.create(el, { type: 'lines', mask: 'lines', linesClass: 'split-line', autoSplit: true,
+        onSplit: s => gsap.from(s.lines, { yPercent: 105, duration: 1.2, ease: 'expo.out', stagger: .1,
+          scrollTrigger: { trigger: el, start: 'top 85%' } }) });
+    });
+
+    /* ---------- Fades ---------- */
+    $$('[data-fade-up]').forEach(el => gsap.from(el, { y: 30, autoAlpha: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } }));
+    $$('[data-stagger]').forEach(el => gsap.from(el.children, { y: 50, autoAlpha: 0, duration: 1.1, ease: 'power3.out', stagger: .1, scrollTrigger: { trigger: el, start: 'top 85%' } }));
+
+    /* ---------- Intro: word-by-word opacity scrub ---------- */
+    const words = SplitText.create('[data-scrub-words]', { type: 'words' }).words;
+    gsap.fromTo(words, { opacity: .14 }, { opacity: 1, stagger: .05, ease: 'none',
+      scrollTrigger: { trigger: '[data-scrub-words]', start: 'top 80%', end: 'bottom 45%', scrub: true } });
+
+    /* ---------- Parallax helpers ---------- */
+    $$('[data-speed]').forEach(el => gsap.to(el, { yPercent: parseFloat(el.dataset.speed) * 100, ease: 'none',
+      scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } }));
+
+    /* ---------- Values: image zoom-out + progress + captions ---------- */
+    const bars = $$('.values__progress i');
+    $$('[data-value]').forEach((card, i) => {
+      gsap.to($('img', card), { scale: 1, ease: 'none', scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true } });
+      gsap.from($('.value-card__cap', card).children, { y: 30, autoAlpha: 0, duration: 1, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 40%' } });
+      gsap.to(bars[i], { scaleX: 1, ease: 'none', scrollTrigger: { trigger: card, start: 'top center', end: 'bottom center', scrub: true } });
+    });
+
+    /* ---------- Outcomes: clip reveal + inner parallax ---------- */
+    $$('.o-item').forEach((item, i) => {
+      gsap.to(item, { clipPath: 'inset(0% 0 0 0 round 18px)', duration: 1.4, ease: 'expo.inOut', delay: (i % 3) * .08,
+        scrollTrigger: { trigger: item, start: 'top 90%' } });
+      gsap.fromTo($('.media', item), { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: item, start: 'top bottom', end: 'bottom top', scrub: true } });
+    });
+
+    /* ---------- Space: pinned horizontal scroll ---------- */
+    mm.add('(min-width: 601px)', () => {
+      const track = $('[data-h-track]');
+      const dist = () => track.scrollWidth - window.innerWidth + parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gutter') || 0) * 0;
+      const tween = gsap.to(track, { x: () => -dist(), ease: 'none',
+        scrollTrigger: { trigger: '.space', start: 'top top', end: () => '+=' + dist(), pin: '.space__pin', scrub: 1, invalidateOnRefresh: true } });
+      gsap.to('[data-h-bar]', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.space', start: 'top top', end: () => '+=' + dist(), scrub: true } });
+      $$('.space__item img').forEach(img => gsap.to(img, { scale: 1, ease: 'none',
+        scrollTrigger: { trigger: img.closest('.space__item'), containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } }));
+    });
+
+    /* ---------- Team: draggable slider + buttons ---------- */
+    const vp = $('[data-team-viewport]'), track = $('[data-team-track]');
+    const minX = () => Math.min(0, vp.clientWidth - track.scrollWidth);
+    const drag = Draggable.create(track, { type: 'x', bounds: { minX: minX(), maxX: 0 }, edgeResistance: .85, dragClickables: true,
+      onPress() { this.applyBounds({ minX: minX(), maxX: 0 }); } })[0];
+    const step = () => ($('.member', track).offsetWidth + 16);
+    const go = dir => {
+      const x = gsap.utils.clamp(minX(), 0, gsap.getProperty(track, 'x') - dir * step());
+      gsap.to(track, { x, duration: .9, ease: 'expo.out', onUpdate: () => drag.update() });
+    };
+    $('[data-team-next]').addEventListener('click', () => go(1));
+    $('[data-team-prev]').addEventListener('click', () => go(-1));
+    gsap.from('.member', { x: 120, autoAlpha: 0, duration: 1.2, ease: 'expo.out', stagger: .08, scrollTrigger: { trigger: vp, start: 'top 85%' } });
+
+    /* ---------- Rating counter ---------- */
+    const num = $('[data-count]'); const obj = { v: 0 };
+    gsap.to(obj, { v: parseFloat(num.dataset.count), duration: 2, ease: 'power2.out', onUpdate: () => num.textContent = obj.v.toFixed(1),
+      scrollTrigger: { trigger: num, start: 'top 90%' } });
+
+    /* ---------- CTA: background scale + card rise ---------- */
+    gsap.fromTo('[data-cta-img]', { scale: 1.3 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.cta', start: 'top bottom', end: 'bottom bottom', scrub: true } });
+    gsap.from('[data-cta-card]', { y: 120, autoAlpha: 0, duration: 1.3, ease: 'expo.out', scrollTrigger: { trigger: '.cta', start: 'top 40%' } });
+
+    /* ---------- Footer wordmark: letters rise ---------- */
+    const fw = SplitText.create('[data-footer-word]', { type: 'chars', mask: 'chars' });
+    gsap.from(fw.chars, { yPercent: 100, duration: 1.4, ease: 'expo.out', stagger: .05, scrollTrigger: { trigger: '[data-footer-word]', start: 'top 95%' } });
+
+    ScrollTrigger.refresh();
+  });
+})();
+</script>
+</body>
+</html>
