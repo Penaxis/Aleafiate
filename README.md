@@ -1,4 +1,4 @@
-# Halden — website starter
+# Aleafiate Health Clinics — website
 
 Open `index.html` in a browser (double-click). Works offline — all animation libraries are in `js/vendor/`.
 Fonts load from Google Fonts when online (falls back to Georgia / system font offline).
@@ -6,6 +6,7 @@ Fonts load from Google Fonts when online (falls back to Georgia / system font of
 ## Structure
 - index.html — Home
 - about.html — About
+- travel-policy.html — Travel Policy (legal page template)
 - practitioners.html — Meet Our Prescribing Practitioners (filter + profile drawer)
 - faq.html — FAQ (search, section nav, accordions)
 - contact.html — Contact (info cards, request form, map)
@@ -20,7 +21,7 @@ Every placeholder is `<img src="" alt="">` with a size label.
 Change it to `<img src="images/your-photo.jpg" alt="Describe the photo">` — the label disappears automatically.
 
 ## Rebranding
-Search & replace "Halden", the phone number, email and address in both HTML files.
+Brand colours are at the top of css/style.css. Logos live in images/brand/ (aleafiate-logo.png for light backgrounds, aleafiate-logo-white.png for the footer).
 
 ## Practitioners
 Each practitioner is one `<article class="doc">` in practitioners.html. Edit the `data-name`, `data-role`,
