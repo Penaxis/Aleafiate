@@ -433,8 +433,9 @@
         const step = $('.member', tTrack).offsetWidth + 16;
         gsap.to(tTrack, { x: gsap.utils.clamp(minX(), 0, gsap.getProperty(tTrack, 'x') - dir * step), duration: .9, ease: 'expo.out', onUpdate: () => drag.update() });
       };
-      $('[data-team-next]').onclick = () => go(1);
-      $('[data-team-prev]').onclick = () => go(-1);
+      const tNext = $('[data-team-next]'), tPrev = $('[data-team-prev]'); // arrows are optional
+      if (tNext) tNext.onclick = () => go(1);
+      if (tPrev) tPrev.onclick = () => go(-1);
       gsap.from($$('.member', tTrack), { x: 120, autoAlpha: 0, duration: 1.2, ease: 'expo.out', stagger: .08, scrollTrigger: { trigger: vp, start: 'top 85%' } });
     }
 
