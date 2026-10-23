@@ -6,6 +6,7 @@ Fonts load from Google Fonts when online (falls back to Georgia / system font of
 ## Structure
 - index.html — Home
 - about.html — About
+- terms-and-conditions.html — Terms & Conditions
 - privacy-policy.html — Privacy Policy
 - travel-policy.html — Travel Policy (legal page template)
 - practitioners.html — Meet Our Prescribing Practitioners (filter + profile drawer)
