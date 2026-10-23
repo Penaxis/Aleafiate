@@ -18,6 +18,7 @@
      data-profile    practitioner card → opens [data-drawer] with its <template>
      data-form       contact form validation + success state
      data-draw       vertical line draws while scrolling (process steps)
+     data-journey    pricing stops: line draws and each stop lights up in turn
      data-offset     on an in-page link: stop this many px above the target
    ========================================================= */
 (() => {
@@ -212,7 +213,7 @@
     gsap.set(panel, { xPercent: 100 });
     const open = card => {
       from = card;
-      const img = $('.doc__media img', card);
+      const img = $('.media img', card);
       $('[data-drawer-role]', drawer).textContent = card.dataset.role;
       $('[data-drawer-name]', drawer).textContent = card.dataset.name;
       $('[data-drawer-reg]', drawer).textContent = card.dataset.reg;
@@ -240,7 +241,8 @@
       from && from.focus({ preventScroll: true });
     };
     $$('[data-profile]').forEach(card => {
-      card.addEventListener('click', () => open(card));
+      card.addEventListener('pointerdown', e => { card._px = e.clientX; });
+      card.addEventListener('click', e => { if (Math.abs(e.clientX - (card._px ?? e.clientX)) < 6) open(card); }); // ignore clicks that end a drag
       card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(card); } });
     });
     $$('[data-drawer-close]', drawer).forEach(b => b.addEventListener('click', close));
@@ -402,7 +404,16 @@
     $$('.o-item').forEach((item, i) => {
       const side = i === 2;
       gsap.from(item, { [side ? 'x' : 'y']: side ? 80 : 70, autoAlpha: 0, duration: 1.3, ease: 'expo.out', delay: (i % 3) * .08, scrollTrigger: { trigger: item, start: 'top 90%' } });
-      gsap.fromTo($('.media', item), { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: item, start: 'top bottom', end: 'bottom top', scrub: true } });
+      $('.media', item) && gsap.fromTo($('.media', item), { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: item, start: 'top bottom', end: 'bottom top', scrub: true } });
+    });
+
+    /* ---------- HOME: pricing journey — line draws, stops light up in turn ---------- */
+    $$('[data-journey]').forEach(j => {
+      const line = $('.journey__line i', j), stops = $$('.stop', j);
+      ScrollTrigger.create({ trigger: $('.journey__track', j), start: 'top 75%', end: 'bottom 70%', onUpdate: st => {
+        line.style.setProperty('--p', st.progress.toFixed(3));
+        stops.forEach((s, k) => s.classList.toggle('is-on', st.progress > k / stops.length));
+      } });
     });
 
     /* ---------- HOME: studio — horizontal, then final image zooms ---------- */
