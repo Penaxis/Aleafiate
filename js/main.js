@@ -13,11 +13,19 @@
      data-count      number counts up (e.g. data-count="4.9")
      data-roll       button / link: letter-roll on hover
      data-hover + data-roll-text   letter-roll text inside a hover card
+     data-accordion  FAQ list: .acc__item > .acc__q + .acc__a
+     data-faq-search / data-faq-group / data-faq-cats   FAQ search + section nav
+     data-profile    practitioner card → opens [data-drawer] with its <template>
+     data-form       contact form validation + success state
+     data-draw       vertical line draws while scrolling (process steps)
+     data-offset     on an in-page link: stop this many px above the target
    ========================================================= */
 (() => {
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dur = reduce ? 0 : 1; // scales UI animation durations; 0 = instant
+  let lenis = null;
 
   /* ---------- placeholders: hide label when a real image loads ---------- */
   $$('.media img').forEach(img => {
@@ -136,7 +144,8 @@
      ========================================================= */
   const tabs = $$('[data-filter]');
   if (tabs.length) {
-    const members = $$('.a-team__grid .member');
+    const bar = tabs[0].closest('.tabs');
+    const members = [...$(bar.dataset.target || '.a-team__grid').children];
     tabs.forEach(tab => tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.toggle('is-active', t === tab));
       const f = tab.dataset.filter;
@@ -149,18 +158,163 @@
     }));
   }
 
+  /* =========================================================
+     FAQ: accordion (one open at a time per list)
+     ========================================================= */
+  const setAcc = (item, open) => {
+    const a = $('.acc__a', item);
+    item.classList.toggle('is-open', open);
+    $('.acc__q', item).setAttribute('aria-expanded', open);
+    gsap.to(a, { height: open ? 'auto' : 0, duration: .8 * dur, ease: 'expo.inOut', overwrite: true, onComplete: () => ScrollTrigger.refresh() });
+    if (open) gsap.fromTo($('.acc__inner', a).children, { y: 18, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .9 * dur, ease: 'expo.out', stagger: .06, delay: .2 * dur });
+  };
+  $$('[data-accordion]').forEach((acc, n) => $$('.acc__item', acc).forEach((item, k) => {
+    const q = $('.acc__q', item), a = $('.acc__a', item), id = `acc-${n}-${k}`;
+    a.id = id; a.setAttribute('role', 'region'); q.setAttribute('aria-controls', id); q.setAttribute('aria-expanded', 'false');
+    q.addEventListener('click', () => {
+      const open = !item.classList.contains('is-open');
+      $$('.acc__item.is-open', acc).forEach(o => o !== item && setAcc(o, false));
+      setAcc(item, open);
+    });
+  }));
+
+  /* ---------- FAQ: live search ---------- */
+  const fSearch = $('[data-faq-search]');
+  if (fSearch) {
+    const groups = $$('[data-faq-group]'), items = $$('.acc__item', $('.faq__groups')), empty = $('[data-faq-empty]');
+    let last = '';
+    fSearch.addEventListener('input', () => {
+      const q = fSearch.value.trim().toLowerCase();
+      items.forEach(it => it.hidden = !!q && !it.textContent.toLowerCase().includes(q));
+      groups.forEach(g => g.hidden = $$('.acc__item', g).every(it => it.hidden));
+      empty.hidden = groups.some(g => !g.hidden);
+      $('[data-faq-term]', empty).textContent = fSearch.value.trim();
+      const shown = items.filter(it => !it.hidden), key = shown.map(it => items.indexOf(it)).join();
+      if (key !== last) gsap.fromTo(shown, { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .6 * dur, ease: 'expo.out', stagger: .025, overwrite: true });
+      last = key;
+      ScrollTrigger.refresh();
+    });
+  }
+
+  /* ---------- FAQ: highlight the section in view ---------- */
+  const fCats = $$('[data-faq-cats] a');
+  fCats.length && $$('[data-faq-group]').forEach((g, i) => ScrollTrigger.create({ trigger: g, start: 'top 45%', end: 'bottom 45%',
+    onToggle: st => st.isActive && fCats.forEach((c, k) => c.classList.toggle('is-active', k === i)) }));
+
+  /* =========================================================
+     PRACTITIONERS: profile drawer
+     ========================================================= */
+  const drawer = $('[data-drawer]');
+  if (drawer) {
+    const panel = $('.drawer__panel', drawer), back = $('.drawer__backdrop', drawer), body = $('.drawer__body', drawer);
+    const dImg = $('.drawer__media img', drawer), dMedia = $('.drawer__media .media', drawer);
+    let from = null;
+    gsap.set(panel, { xPercent: 100 });
+    const open = card => {
+      from = card;
+      const img = $('.doc__media img', card);
+      $('[data-drawer-role]', drawer).textContent = card.dataset.role;
+      $('[data-drawer-name]', drawer).textContent = card.dataset.name;
+      $('[data-drawer-reg]', drawer).textContent = card.dataset.reg;
+      $('[data-drawer-content]', drawer).replaceChildren($('template', card).content.cloneNode(true));
+      $('[data-drawer-book]', drawer).href = `contact.html?with=${encodeURIComponent(card.dataset.name)}`;
+      dImg.src = img.getAttribute('src'); dImg.alt = img.alt;
+      dMedia.dataset.label = $('.media', card).dataset.label;
+      dMedia.classList.toggle('has-img', !!img.getAttribute('src'));
+      drawer.classList.add('is-open'); drawer.setAttribute('aria-hidden', 'false');
+      document.documentElement.classList.add('is-locked'); lenis && lenis.stop();
+      panel.scrollTop = 0;
+      gsap.timeline()
+        .to(back, { opacity: 1, duration: .5 * dur }, 0)
+        .fromTo(panel, { xPercent: 100 }, { xPercent: 0, duration: 1 * dur, ease: 'expo.out' }, 0)
+        .fromTo(dImg, { scale: 1.25 }, { scale: 1, duration: 1.4 * dur, ease: 'expo.out' }, .1 * dur)
+        .fromTo([...[...body.children].filter(c => !c.matches('[data-drawer-content]')), ...$('[data-drawer-content]', drawer).children], { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .9 * dur, ease: 'expo.out', stagger: .04 }, .25 * dur);
+      $('.drawer__close', drawer).focus({ preventScroll: true });
+    };
+    const close = () => {
+      if (!drawer.classList.contains('is-open')) return;
+      gsap.timeline({ onComplete: () => { drawer.classList.remove('is-open'); drawer.setAttribute('aria-hidden', 'true'); } })
+        .to(panel, { xPercent: 100, duration: .7 * dur, ease: 'expo.in' }, 0)
+        .to(back, { opacity: 0, duration: .5 * dur }, .2 * dur);
+      document.documentElement.classList.remove('is-locked'); lenis && lenis.start();
+      from && from.focus({ preventScroll: true });
+    };
+    $$('[data-profile]').forEach(card => {
+      card.addEventListener('click', () => open(card));
+      card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(card); } });
+    });
+    $$('[data-drawer-close]', drawer).forEach(b => b.addEventListener('click', close));
+    addEventListener('keydown', e => {
+      if (!drawer.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'Tab') { // keep focus inside the drawer
+        const f = $$('a[href],button,[tabindex="0"]', panel), first = f[0], end = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); end.focus(); }
+        else if (!e.shiftKey && document.activeElement === end) { e.preventDefault(); first.focus(); }
+      }
+    });
+  }
+
+  /* =========================================================
+     CONTACT: form validation + success state
+     With an action="" URL (e.g. Formspree) the form is POSTed there;
+     without one it opens the visitor's email app, addressed to data-mailto.
+     ========================================================= */
+  const form = $('[data-form]');
+  if (form) {
+    const pick = new URLSearchParams(location.search).get('with'), sel = $('[name="practitioner"]', form);
+    if (pick && sel) { sel.add(new Option(pick, pick, true, true)); }
+    const rules = { email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), tel: v => v.replace(/\D/g, '').length >= 7 };
+    const check = el => {
+      const v = el.value.trim(), ok = el.type === 'checkbox' ? el.checked : v && (!rules[el.type] || rules[el.type](v));
+      (el.closest('.field') || el.closest('.check')).classList.toggle('is-error', !ok);
+      return ok;
+    };
+    const req = $$('[required]', form);
+    req.forEach(el => el.addEventListener(el.type === 'checkbox' ? 'change' : 'blur', () => check(el)));
+    req.forEach(el => el.addEventListener('input', () => el.closest('.is-error') && check(el)));
+    const done = $('.form-success', form.closest('.form-card'));
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const bad = req.filter(el => !check(el));
+      if (bad.length) {
+        bad[0].focus();
+        gsap.fromTo(bad.map(el => el.closest('.field, .check')), { x: -8 }, { x: 0, duration: .6 * dur, ease: 'elastic.out(1, .3)' });
+        return;
+      }
+      const data = new FormData(form);
+      if (form.getAttribute('action')) {
+        try {
+          const r = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+          if (!r.ok) throw new Error(r.status);
+        } catch (err) { alert('Sorry, something went wrong sending your request. Please call or email us instead.'); return; }
+      } else {
+        const lines = []; data.forEach((v, k) => v && lines.push(`${k}: ${v}`));
+        location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent('Consultation request')}&body=${encodeURIComponent(lines.join('\n'))}`;
+        $('[data-success-note]', done).textContent = 'Your email app should now open with your request filled in — just press send.';
+      }
+      const tick = $$('path, circle', $('svg', done));
+      lenis && lenis.scrollTo(form.closest('.form-card'), { offset: -100, duration: 1.2 });
+      gsap.timeline()
+        .to(form, { autoAlpha: 0, y: -20, duration: .5 * dur })
+        .fromTo(done, { autoAlpha: 0, scale: .96 }, { autoAlpha: 1, scale: 1, duration: .8 * dur, ease: 'expo.out' })
+        .fromTo(tick, { strokeDasharray: 300, strokeDashoffset: 300 }, { strokeDashoffset: 0, duration: 1.2 * dur, ease: 'power2.inOut', stagger: .2 }, '<')
+        .from($$('h3, p, a', done), { y: 20, autoAlpha: 0, duration: .8 * dur, ease: 'expo.out', stagger: .08 }, '-=.9');
+    });
+  }
+
   if (reduce) return;
 
   /* =========================================================
      SMOOTH SCROLL + NAV
      ========================================================= */
-  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
   $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
     const id = a.getAttribute('href'); if (id.length < 2 || !$(id)) return;
-    e.preventDefault(); lenis.scrollTo($(id), { duration: 1.6 });
+    e.preventDefault(); lenis.scrollTo($(id), { duration: 1.6, offset: -(+a.dataset.offset || 0) });
   }));
   const nav = $('#nav'); let lastY = 0;
   lenis.on('scroll', ({ scroll }) => {
@@ -292,6 +446,13 @@
         .fromTo('[data-cta-img]', { scale: 1.3 }, { scale: 1, duration: 1.2, ease: 'none' }, 0)
         .fromTo('.cta__card-wrap', { autoAlpha: 0, y: 80 }, { autoAlpha: 1, y: 0, duration: .6, ease: 'power2.out' }, .9);
     });
+
+    /* ---------- PRACTITIONERS: process line draws, steps light up ---------- */
+    $$('[data-draw]').forEach(el => gsap.to(el, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: el.parentElement, start: 'top 65%', end: 'bottom 65%', scrub: true } }));
+    $$('.step').forEach(st => ScrollTrigger.create({ trigger: st, start: 'top 65%', onEnter: () => st.classList.add('is-on'), onLeaveBack: () => st.classList.remove('is-on') }));
+
+    /* ---------- CONTACT: map pin drops in ---------- */
+    $$('.map__pin').forEach(pin => gsap.from(pin, { y: -60, autoAlpha: 0, duration: 1.4, ease: 'bounce.out', scrollTrigger: { trigger: pin.closest('.map'), start: 'top 70%' } }));
 
     /* ---------- ABOUT: hero image parallax ---------- */
     if ($('.a-hero__media')) {
