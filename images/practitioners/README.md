@@ -16,8 +16,8 @@ New practitioners: name the file after the person, e.g. `dr-jane-smith.jpg`, and
 
 | File | Size | Notes |
 |---|---|---|
-| `cta-background.jpg` | 2560 × 1440 (landscape 16:9) | Grows to full screen; a white booking card sits in the centre — keep the subject in the left third |
-| `cta-card.jpg` | 800 × 900 (almost square) | Left side of the booking card |
+| `cta-background.webp` | 2560 × 1440 (landscape 16:9) | Grows to full screen; a white booking card sits in the centre — keep the subject in the left third |
+| `cta-card.webp` | 800 × 900 (almost square) | Left side of the booking card |
 
 **cta-background.jpg prompt**
 

@@ -150,7 +150,7 @@ p{margin:0}
 .values{display:grid;grid-template-columns:1fr 1fr;background:var(--sand)}
 .value-card{position:relative;height:100vh;min-height:560px}
 .value-card .media{position:absolute;inset:0}
-.value-card .media img{transform:scale(1.15)}
+.value-card .media img{transform:scale(1.15);object-position:50% 20%} /* keep faces in view */
 .value-card::before{content:"";position:absolute;inset:40% 0 0 0;z-index:1;background:linear-gradient(to top,rgba(13,13,48,.7),transparent)}
 .value-card__cap{position:absolute;left:clamp(20px,4vw,56px);right:clamp(20px,4vw,56px);bottom:clamp(24px,5vw,56px);z-index:2;color:var(--bone);max-width:360px}
 .value-card__cap h3{font-size:28px;margin-bottom:10px}

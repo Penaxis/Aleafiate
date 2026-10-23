@@ -6,7 +6,7 @@ Generate each image, save it with the **exact file name** below into `images/hom
 and it appears on the homepage automatically. Until a file exists, its slot shows a
 labelled placeholder.
 
-**File format:** JPG (or WebP), quality ~80, ideally under 400 KB each.
+**File format:** WebP (or JPG — then tell Claude so the links can be updated), ideally under 400 KB each.
 **Sizes** are the minimum to stay sharp on large screens. Bigger is fine if the shape (ratio) matches.
 
 ---
@@ -35,7 +35,7 @@ suggests them. AHPRA also requires that images don't mislead. So:
 
 | File | Size | Shape |
 |---|---|---|
-| `home-hero.jpg` | **2560 × 1600** | Landscape 16:10 |
+| `home-hero.webp` | **2560 × 1600** | Landscape 16:10 |
 
 **How it's shown:** starts as the right half of the screen (only the **centre third** is visible),
 then expands to full width as you scroll, with a white headline over it.
@@ -50,10 +50,10 @@ Keep the person **in the exact centre**, with plain background on both sides.
 
 | File | Size | Shape |
 |---|---|---|
-| `step-1-free-call.jpg` | **1200 × 1600** | Portrait 3:4 |
-| `step-2-intake-form.jpg` | **1200 × 1600** | Portrait 3:4 |
-| `step-3-consultation.jpg` | **1200 × 1600** | Portrait 3:4 |
-| `step-4-ongoing-care.jpg` | **1200 × 1600** | Portrait 3:4 |
+| `step-1-free-call.webp` | **1200 × 1600** | Portrait 3:4 |
+| `step-2-intake-form.webp` | **1200 × 1600** | Portrait 3:4 |
+| `step-3-consultation.webp` | **1200 × 1600** | Portrait 3:4 |
+| `step-4-ongoing-care.webp` | **1200 × 1600** | Portrait 3:4 |
 
 **How it's shown:** half the screen wide, full screen tall. A white title and text sit over
 the **bottom third** on a dark fade, so keep the bottom third simple (floor, table, blanket).
@@ -77,11 +77,11 @@ Put the person in the **upper two-thirds**.
 
 | File | Size | Shape |
 |---|---|---|
-| `care-pain.jpg` | **1600 × 1200** | Landscape 4:3 |
-| `care-sleep.jpg` | **1600 × 1200** | Landscape 4:3 |
-| `care-wellbeing.jpg` | **1600 × 1200** | Landscape 4:3 |
-| `care-womens-health.jpg` | **1600 × 1200** | Landscape 4:3 |
-| `care-something-else.jpg` | **1600 × 1200** | Landscape 4:3 |
+| `care-pain.webp` | **1600 × 1200** | Landscape 4:3 |
+| `care-sleep.webp` | **1600 × 1200** | Landscape 4:3 |
+| `care-wellbeing.webp` | **1600 × 1200** | Landscape 4:3 |
+| `care-womens-health.webp` | **1600 × 1200** | Landscape 4:3 |
+| `care-something-else.webp` | **1600 × 1200** | Landscape 4:3 |
 
 **How it's shown:** when closed, a card is a **narrow vertical strip from the centre** of the
 image; when open, you see most of it. Text sits over the **bottom-left**.
@@ -108,17 +108,17 @@ Keep the person **centred**, and the bottom-left calm.
 
 | File | Size | Shape |
 |---|---|---|
-| `why-practitioner.jpg` | **1200 × 1400** | Portrait, almost square |
-| `why-telehealth.jpg` | **800 × 1500** | Tall portrait 1:2 |
+| `why-practitioner.webp` | **1200 × 1400** | Portrait, almost square |
+| `why-telehealth.webp` | **800 × 1500** | Tall portrait 1:2 |
 
 **How it's shown:** white caption text over the **bottom part** on a dark fade, and the
 image drifts slightly while scrolling. On phones the first one is shown wide and short,
 so keep the subject **centred**.
 
-**AHPRA-registered practitioners** (`why-practitioner.jpg`)
+**AHPRA-registered practitioners** (`why-practitioner.webp`)
 > A male general practitioner in his 40s wearing a navy blazer over a white shirt, sitting with a patient and explaining something on a tablet, warm and attentive, modern light consultation room, subject centred, calm lower area for text
 
-**In clinic or by telehealth** (`why-telehealth.jpg`)
+**In clinic or by telehealth** (`why-telehealth.webp`)
 > Over-the-shoulder view of a woman at home on a laptop video consultation, a friendly practitioner softly visible on the screen, bright tidy home office, tall vertical composition, subject centred, calm lower area for text
 
 ---
@@ -127,13 +127,13 @@ so keep the subject **centred**.
 
 | File | Size | Shape |
 |---|---|---|
-| `clinic-reception.jpg` | **1800 × 1100** | Landscape ~16:10 |
-| `clinic-consult-room.jpg` | **1800 × 1100** | Landscape ~16:10 |
-| `clinic-telehealth.jpg` | **1800 × 1100** | Landscape ~16:10 |
-| `clinic-wide.jpg` | **2560 × 1440** | Landscape 16:9 |
+| `clinic-reception.webp` | **1800 × 1100** | Landscape ~16:10 |
+| `clinic-consult-room.webp` | **1800 × 1100** | Landscape ~16:10 |
+| `clinic-telehealth.webp` | **1800 × 1100** | Landscape ~16:10 |
+| `clinic-wide.webp` | **2560 × 1440** | Landscape 16:9 |
 
 **How it's shown:** large cards that slide sideways on a navy background. The last one
-(`clinic-wide.jpg`) grows to fill the whole screen, darkens, and shows the white quote
+(`clinic-wide.webp`) grows to fill the whole screen, darkens, and shows the white quote
 "Leading the way in holistic healthcare in Australia." in the **centre**, so keep its centre quiet.
 
 **Reception**
@@ -154,7 +154,7 @@ so keep the subject **centred**.
 
 | File | Size | Shape |
 |---|---|---|
-| `reviews-side.jpg` | **900 × 1200** | Portrait 3:4 |
+| `reviews-side.webp` | **900 × 1200** | Portrait 3:4 |
 
 **How it's shown:** next to the reviews, with white stars, text and a button over the
 **bottom third** on a dark fade. The reviews praise the front-desk team, so this shows reception.
@@ -167,8 +167,8 @@ so keep the subject **centred**.
 
 | File | Size | Shape |
 |---|---|---|
-| `cta-background.jpg` | **2560 × 1440** | Landscape 16:9 |
-| `cta-card.jpg` | **800 × 900** | Portrait, almost square |
+| `cta-background.webp` | **2560 × 1440** | Landscape 16:9 |
+| `cta-card.webp` | **800 × 900** | Portrait, almost square |
 
 **How it's shown:** the background grows to fill the screen and a white booking card
 appears **in the centre** over it. Put the subject in the **left third**.
