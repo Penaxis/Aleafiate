@@ -57,12 +57,17 @@
   function buildRoll(el) {
     const text = el.textContent.trim();
     el.setAttribute('aria-label', text);
-    const row = cls => `<span class="roll__row ${cls}" aria-hidden="true">${[...text].map(c => `<span class="roll__ch">${c === ' ' ? '&nbsp;' : c}</span>`).join('')}</span>`;
+    const word = w => `<span class="roll__w">${[...w].map(c => `<span class="roll__ch">${c}</span>`).join('')}</span>`;
+    const row = cls => `<span class="roll__row ${cls}" aria-hidden="true">${text.split(/\s+/).map(word).join(' ')}</span>`; // words can wrap; letters stay together
     el.classList.add('roll');
     el.innerHTML = row('') + row('roll__row--clone');
     const [a, b] = $$('.roll__row', el).map(r => $$('.roll__ch', r));
     gsap.set(b, { yPercent: 105 });
+    // the per-letter roll only works on one line: when the text wraps, hide the copy and skip the effect
+    const multi = () => { const m = a.length > 1 && a[0].offsetTop !== a[a.length - 1].offsetTop; el.classList.toggle('roll--multi', m); return m; };
+    window.ResizeObserver ? new ResizeObserver(() => { if (multi()) gsap.set(a, { yPercent: 0 }); }).observe(el) : multi();
     return dir => {
+      if (multi()) return;
       gsap.to(a, { yPercent: dir ? -105 : 0, duration: .55, ease: 'power3.inOut', stagger: .016, overwrite: true });
       gsap.to(b, { yPercent: dir ? 0 : 105, duration: .55, ease: 'power3.inOut', stagger: .016, overwrite: true });
     };
@@ -312,7 +317,7 @@
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); all[(k + (e.key === 'ArrowDown' ? 1 : -1) + all.length) % all.length].focus(); }
       else if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); all[e.key === 'Home' ? 0 : all.length - 1].focus(); }
       else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (k > -1) choose(k); }
-      else if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(); } // don't also close a surrounding dialog
       else if (e.key === 'Tab') close(false);
     });
     sel.addEventListener('change', render);
@@ -377,7 +382,7 @@
   /* =========================================================
      SMOOTH SCROLL + NAV
      ========================================================= */
-  lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis = window.__lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);

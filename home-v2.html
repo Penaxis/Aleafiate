@@ -7,7 +7,8 @@
 <meta name="description" content="Aleafiate Health Clinics, Logan Central: consultations with AHPRA-registered practitioners in clinic or by telehealth. Start with a free, no-obligation call on 07 3473 3396.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/booking.css">
 <style>
 /* =========================================================
    TOKENS — change colours / fonts here
@@ -26,8 +27,8 @@
   --ink:#13132E;
   --muted:#5B6178;
   --white:#fff;
-  --serif:"Fraunces", Georgia, serif;
-  --sans:"Manrope", system-ui, sans-serif;
+  --heading:"Montserrat", system-ui, sans-serif; /* headings */
+  --body:"Poppins", system-ui, sans-serif;     /* paragraphs & UI */
   --gutter:clamp(16px,4vw,64px);
   --radius:18px;
   --ease:cubic-bezier(.65,.05,.36,1);
@@ -41,10 +42,10 @@ html,body{margin:0;padding:0}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-stopped{overflow:hidden}
-body{background:var(--bone);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:var(--bone);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
-h1,h2,h3,h4{font-family:var(--serif);font-weight:300;margin:0;line-height:1.05;letter-spacing:-.02em}
+h1,h2,h3,h4{font-family:var(--heading);font-weight:500;margin:0;line-height:1.1;letter-spacing:-.025em}
 p{margin:0}
 .container{width:100%;max-width:1440px;margin:0 auto;padding:0 var(--gutter)}
 .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:inline-flex;align-items:center;gap:10px}
@@ -57,7 +58,7 @@ p{margin:0}
    The label + gradient disappear automatically once an image loads.
    ========================================================= */
 .media{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--stone),var(--sand) 55%,#B9DED7)}
-.media::after{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:14px 18px;font:500 11px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:rgba(19,19,46,.45);pointer-events:none}
+.media::after{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:14px 18px;font:500 11px/1.3 var(--body);letter-spacing:.14em;text-transform:uppercase;color:rgba(19,19,46,.45);pointer-events:none}
 .media.has-img::after{display:none}
 .media img{width:100%;height:100%;object-fit:cover;will-change:transform}
 .media img[src=""]{opacity:0}
@@ -65,7 +66,7 @@ p{margin:0}
 /* =========================================================
    BUTTONS — letter-roll hover
    ========================================================= */
-.btn{--bg:var(--moss);--fg:var(--bone);--line:var(--moss);position:relative;display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 26px;border-radius:999px;background:var(--bg);color:var(--fg);border:1px solid var(--line);font:500 15px/1 var(--sans);overflow:hidden;isolation:isolate;cursor:pointer;transition:color .5s var(--ease),border-color .5s var(--ease)}
+.btn{--bg:var(--moss);--fg:var(--bone);--line:var(--moss);position:relative;display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 26px;border-radius:999px;background:var(--bg);color:var(--fg);border:1px solid var(--line);font:500 15px/1 var(--body);overflow:hidden;isolation:isolate;cursor:pointer;transition:color .5s var(--ease),border-color .5s var(--ease)}
 .btn--ghost{--bg:transparent;--fg:var(--ink);--line:rgba(19,19,46,.35)}
 .btn--light{--bg:var(--bone);--fg:var(--ink);--line:var(--bone)}
 .btn__fill{position:absolute;left:var(--x,50%);top:var(--y,50%);width:0;height:0;border-radius:50%;background:var(--clay);transform:translate(-50%,-50%);z-index:-1;transition:width .6s var(--ease),height .6s var(--ease)}
@@ -86,7 +87,7 @@ p{margin:0}
 .nav{position:fixed;inset:0 0 auto 0;z-index:50;padding:18px var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:24px;transition:transform .6s var(--ease),background .4s,backdrop-filter .4s}
 .nav.is-hidden{transform:translateY(-110%)}
 .nav.is-solid{background:rgba(246,249,249,.82);backdrop-filter:blur(12px)}
-.logo{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:22px;letter-spacing:-.01em}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--heading);font-size:22px;letter-spacing:-.01em}
 .logo__mark{width:28px;height:28px}
 .nav__links{display:flex;gap:30px;font-size:14px}
 .nav__links a{position:relative}
@@ -104,7 +105,7 @@ p{margin:0}
 .menu-open .nav{color:var(--bone)}
 .menu-open .nav__burger{border-color:rgba(246,249,249,.4)}
 .menu-open .nav__burger span{background:var(--bone)}
-.mobile-menu a{font-family:var(--serif);font-size:44px;line-height:1.3;display:block;transform:translateY(40px);opacity:0;transition:transform .8s var(--ease),opacity .8s}
+.mobile-menu a{font-family:var(--heading);font-size:44px;line-height:1.3;display:block;transform:translateY(40px);opacity:0;transition:transform .8s var(--ease),opacity .8s}
 .menu-open .mobile-menu a{transform:none;opacity:1}
 .menu-open .mobile-menu a:nth-child(2){transition-delay:.06s}.menu-open .mobile-menu a:nth-child(3){transition-delay:.12s}.menu-open .mobile-menu a:nth-child(4){transition-delay:.18s}.menu-open .mobile-menu a:nth-child(5){transition-delay:.24s}.menu-open .mobile-menu a:nth-child(6){transition-delay:.3s}.menu-open .mobile-menu a:nth-child(7){transition-delay:.36s}
 
@@ -113,7 +114,7 @@ p{margin:0}
    ========================================================= */
 .hero{position:relative;height:100vh;min-height:640px;overflow:hidden;background:var(--bone)}
 .hero__content{position:absolute;inset:0 50% 0 0;display:flex;flex-direction:column;justify-content:center;padding:120px var(--gutter) 60px;z-index:2}
-.hero__title{font-size:clamp(44px,5.6vw,92px)}
+.hero__title{font-size:clamp(38px,4.8vw,80px)}
 .hero__title em{font-style:italic;color:var(--moss-2)}
 .hero__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
 .hero__foot{position:absolute;left:var(--gutter);bottom:40px;max-width:300px;font-size:14px;color:var(--muted)}
@@ -133,7 +134,7 @@ p{margin:0}
 .intro__orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;pointer-events:none}
 .intro__orb--a{width:420px;height:420px;background:#CFEFE9;left:-120px;top:10%}
 .intro__orb--b{width:520px;height:520px;background:#DCDDF2;right:-160px;bottom:-10%}
-.intro__text{position:relative;max-width:1100px;margin:0 auto;text-align:center;font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.4vw,52px);line-height:1.18;letter-spacing:-.015em}
+.intro__text{position:relative;max-width:1100px;margin:0 auto;text-align:center;font-family:var(--body);font-weight:300;font-size:clamp(24px,2.9vw,44px);line-height:1.18;letter-spacing:-.015em}
 .intro__features{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,200px));justify-content:center;gap:clamp(20px,5vw,72px);margin-top:72px;text-align:center;font-size:15px}
 .intro__icon{width:44px;height:44px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;background:var(--moss);color:var(--bone)}
 .intro__icon svg{width:20px;height:20px}
@@ -177,7 +178,7 @@ p{margin:0}
 .t-card__arrow svg{width:16px;height:16px}
 .t-card.is-active .t-card__arrow{transform:rotate(45deg);background:var(--bone);color:var(--ink)}
 .t-card__body{position:absolute;left:24px;right:24px;bottom:24px;z-index:2}
-.t-card__title{font-family:var(--serif);font-size:26px;white-space:nowrap}
+.t-card__title{font-family:var(--heading);font-size:26px;white-space:nowrap}
 .t-card:not(.is-active) .t-card__title{writing-mode:vertical-rl;transform:rotate(180deg);font-size:22px}
 .t-card__desc{max-width:360px;margin-top:10px;font-size:15px;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .7s var(--ease)}
 .t-card.is-active .t-card__desc{opacity:.9;transform:none;transition-delay:.35s}
@@ -241,7 +242,7 @@ p{margin:0}
 .voices__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:clamp(32px,6vw,96px);align-items:center}
 .voices h2{font-size:clamp(40px,5vw,80px);margin:16px 0 28px}
 .rating{display:flex;align-items:center;gap:18px;margin-top:32px}
-.rating__num{font-family:var(--serif);font-size:72px;line-height:1}
+.rating__num{font-family:var(--heading);font-size:72px;line-height:1}
 .rating__stars{color:var(--clay);letter-spacing:3px}
 .rating p{font-size:14px;color:var(--muted)}
 .marquee{display:grid;grid-template-columns:1fr 1fr;gap:16px;height:640px;overflow:hidden;mask-image:linear-gradient(to bottom,transparent,#000 15%,#000 85%,transparent)}
@@ -279,7 +280,7 @@ p{margin:0}
    ========================================================= */
 .footer{background:var(--moss);color:var(--bone);padding:96px 0 32px;overflow:hidden}
 .footer__top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
-.footer h4{font-family:var(--sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;opacity:.6;margin-bottom:18px}
+.footer h4{font-family:var(--body);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;opacity:.6;margin-bottom:18px}
 .footer li{list-style:none;margin-bottom:10px}
 .footer ul{padding:0;margin:0}
 .footer a{opacity:.85;transition:opacity .3s}.footer a:hover{opacity:1}
@@ -287,7 +288,7 @@ p{margin:0}
 .footer__news input{flex:1;background:transparent;border:0;color:var(--bone);font:inherit;padding:12px 0;outline:none}
 .footer__news input::placeholder{color:rgba(246,249,249,.5)}
 .footer__news button{background:none;border:0;color:var(--bone);cursor:pointer}
-.footer__word{font-family:var(--serif);font-weight:300;font-size:clamp(90px,22vw,340px);line-height:.85;letter-spacing:-.04em;margin-top:80px;white-space:nowrap}
+.footer__word{font-family:var(--heading);font-weight:500;font-size:clamp(90px,22vw,340px);line-height:.85;letter-spacing:-.04em;margin-top:80px;white-space:nowrap}
 .footer__bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:28px;font-size:13px;opacity:.6}
 
 /* =========================================================
@@ -367,7 +368,7 @@ p{margin:0}
   </nav>
   <div class="nav__right">
     <a href="tel:+61734733396" class="nav__phone">07 3473 3396</a>
-    <a href="contact.html" class="btn btn--ghost" data-roll><span class="btn__fill"></span><span class="btn__label">Book now</span><span class="btn__dot"></span></a>
+    <a href="contact.html" class="btn btn--ghost" data-roll data-book><span class="btn__fill"></span><span class="btn__label">Book now</span><span class="btn__dot"></span></a>
     <button class="nav__burger" aria-label="Open menu"><span></span><span></span></button>
   </div>
 </header>
@@ -605,6 +606,7 @@ p{margin:0}
 </footer>
 
 <!-- ================= LIBRARIES ================= -->
+<script src="js/booking.js"></script>
 <script src="js/vendor/gsap.min.js"></script>
 <script src="js/vendor/ScrollTrigger.min.js"></script>
 <script src="js/vendor/SplitText.min.js"></script>
@@ -667,7 +669,7 @@ p{margin:0}
   if (reduce) { gsap.set('.o-item', { clipPath: 'none' }); return; }
 
   /* ---------- Lenis smooth scroll ---------- */
-  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+  const lenis = window.__lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);

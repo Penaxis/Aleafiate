@@ -1,0 +1,89 @@
+/* =========================================================
+   ALEAFIATE — floating "Book appointment" button + pop-up form
+   (markup and behaviour: js/booking.js). Uses the brand tokens
+   from the page's :root, with fallbacks.
+   ========================================================= */
+
+/* ---------- floating button ---------- */
+.bk-fab{position:fixed;right:clamp(16px,2.4vw,32px);bottom:clamp(16px,2.4vw,32px);z-index:60;display:flex;align-items:center;gap:12px;height:58px;padding:0 24px 0 7px;border:0;border-radius:999px;background:var(--navy,#111145);color:#fff;font:500 15px/1 var(--body,"Poppins",sans-serif);cursor:pointer;box-shadow:0 18px 40px -14px rgba(13,13,48,.55);transform:translateY(140%);opacity:0;transition:transform .8s var(--ease,cubic-bezier(.65,.05,.36,1)),opacity .5s,background .4s,box-shadow .4s}
+.bk-fab.is-visible{transform:none;opacity:1}
+.bk-fab:hover{background:var(--teal-deep,#247568);box-shadow:0 22px 46px -14px rgba(36,117,104,.6)}
+.bk-fab:focus-visible{outline:2px solid var(--mint,#8adcce);outline-offset:3px}
+.bk-fab__icon{position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--mint,#8adcce);color:var(--navy,#111145);transition:transform .7s var(--ease,cubic-bezier(.65,.05,.36,1))}
+.bk-fab__icon::after{content:"";position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--mint,#8adcce);animation:bkPulse 2.6s var(--ease,ease-out) infinite}
+.bk-fab:hover .bk-fab__icon{transform:rotate(-12deg) scale(1.06)}
+.bk-fab__icon svg{width:22px;height:22px}
+@keyframes bkPulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.8);opacity:0}}
+.bk-open .bk-fab,.menu-open .bk-fab,.is-locked .bk-fab{transform:translateY(140%);opacity:0;pointer-events:none}
+
+/* ---------- dialog ---------- */
+.bk{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:clamp(12px,3vw,32px);visibility:hidden;transition:visibility 0s .6s}
+.bk.is-open{visibility:visible;transition:none}
+.bk-open,.bk-open body{overflow:hidden}
+.bk__backdrop{position:absolute;inset:0;background:rgba(13,13,48,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .5s}
+.bk.is-open .bk__backdrop{opacity:1}
+.bk__panel{position:relative;width:min(100%,600px);max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;background:#fff;border-radius:calc(var(--radius,18px) + 6px);box-shadow:0 50px 100px -40px rgba(13,13,48,.6);opacity:0;transform:translateY(40px) scale(.96);transition:opacity .4s,transform .7s var(--ease,cubic-bezier(.65,.05,.36,1))}
+.bk.is-open .bk__panel{opacity:1;transform:none}
+.bk__close{position:absolute;top:16px;right:16px;z-index:3;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid rgba(246,249,249,.35);background:rgba(246,249,249,.08);color:#fff;cursor:pointer;transition:background .4s,transform .6s var(--ease,ease)}
+.bk__close:hover{background:var(--mint,#8adcce);color:var(--navy,#111145);transform:rotate(90deg)}
+.bk__close svg{width:15px;height:15px}
+.bk__head{position:relative;overflow:hidden;padding:clamp(28px,4vw,40px) clamp(24px,4vw,44px) clamp(24px,3vw,32px);background:var(--navy,#111145);color:#fff}
+.bk__head .eyebrow{color:rgba(246,249,249,.75)}
+.bk__head .eyebrow::before{background:var(--mint,#8adcce)}
+.bk__head h2{font-family:var(--heading,"Montserrat",sans-serif);font-weight:500;font-size:clamp(28px,3.2vw,40px);line-height:1.1;letter-spacing:-.025em;margin:12px 0 10px}
+.bk__head p{font-size:14px;opacity:.75;max-width:420px}
+.bk__orb{position:absolute;width:360px;height:360px;right:-120px;top:-170px;border-radius:50%;background:radial-gradient(circle,rgba(138,220,206,.35),transparent 65%);pointer-events:none}
+.bk__body{position:relative;padding:clamp(22px,3vw,34px) clamp(24px,4vw,44px) clamp(24px,3vw,34px)}
+.bk__row{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+
+/* fields stagger in when the dialog opens */
+.bk__form>*{opacity:0;transform:translateY(14px);transition:opacity .5s,transform .7s var(--ease,ease)}
+.bk.is-open .bk__form>*{opacity:1;transform:none}
+.bk.is-open .bk__form>*:nth-child(1){transition-delay:.18s}.bk.is-open .bk__form>*:nth-child(2){transition-delay:.23s}.bk.is-open .bk__form>*:nth-child(3){transition-delay:.28s}.bk.is-open .bk__form>*:nth-child(4){transition-delay:.33s}.bk.is-open .bk__form>*:nth-child(5){transition-delay:.38s}.bk.is-open .bk__form>*:nth-child(6){transition-delay:.43s}.bk.is-open .bk__form>*:nth-child(7){transition-delay:.48s}.bk.is-open .bk__form>*:nth-child(8){transition-delay:.53s}.bk.is-open .bk__form>*:nth-child(9){transition-delay:.58s}
+
+/* form fields (same look as the site's forms; complete here so any page can use the dialog) */
+.bk .field{position:relative;margin-bottom:20px}
+.bk .field input,.bk .field select,.bk .field textarea{display:block;width:100%;border:0;border-bottom:1px solid rgba(19,19,46,.22);border-radius:0;background:transparent;padding:22px 0 8px;font:inherit;font-family:var(--body,"Poppins",sans-serif);font-size:15px;color:var(--ink,#13132e);outline:none;-webkit-appearance:none;appearance:none}
+.bk .field textarea{resize:vertical;min-height:64px}
+.bk .field select{cursor:pointer;padding-right:24px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%2313132E' stroke-width='1.4'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 2px center}
+.bk .field label{position:absolute;left:0;top:22px;font-size:15px;color:var(--muted,#5b6178);pointer-events:none;transform-origin:left top;transition:transform .5s var(--ease,ease),color .4s}
+.bk .field input:focus+label,.bk .field input:not(:placeholder-shown)+label,.bk .field textarea:focus+label,.bk .field textarea:not(:placeholder-shown)+label,.bk .field--static label{transform:translateY(-20px) scale(.8);color:var(--ink,#13132e)}
+.bk .field__bar{position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--navy,#111145);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease,ease)}
+.bk .field :focus~.field__bar,.bk .dd.is-open .field__bar{transform:scaleX(1)}
+.bk .field__err{position:absolute;left:0;top:100%;margin-top:4px;font-size:12px;color:#a2482f;opacity:0;transition:opacity .3s}
+.bk .field.is-error input{border-bottom-color:#a2482f}
+.bk .field.is-error .field__err{opacity:1}
+.bk .dd__btn{padding:22px 0 8px;font-size:15px}
+.bk .check{display:flex;gap:10px;align-items:flex-start;margin:6px 0 20px;font-size:13px;color:var(--muted,#5b6178);cursor:pointer}
+.bk .check input{width:18px;height:18px;margin:1px 0 0;flex:none;accent-color:var(--navy,#111145)}
+.bk .check a{color:var(--ink,#13132e);border-bottom:1px solid currentColor}
+.bk .check.is-error{color:#a2482f}
+.bk .bk__form .btn{width:100%;justify-content:center}
+.bk__alt{margin-top:16px;text-align:center;font-size:13px;color:var(--muted,#5b6178)}
+.bk__alt a{color:var(--ink,#13132e);font-weight:500;border-bottom:1px solid currentColor}
+.bk-shake{animation:bkShake .5s var(--ease,ease)}
+@keyframes bkShake{20%{transform:translateX(-7px)}45%{transform:translateX(6px)}70%{transform:translateX(-3px)}100%{transform:none}}
+
+/* success */
+.bk__done{text-align:center;padding:24px 0 8px}
+.bk__done svg{width:76px;height:76px;margin:0 auto 18px;color:var(--teal-deep,#247568)}
+.bk__done svg *{stroke-dasharray:300;stroke-dashoffset:300}
+.bk.is-done .bk__done svg *{animation:bkDraw 1.2s var(--ease,ease) forwards}
+.bk.is-done .bk__done svg path{animation-delay:.35s}
+.bk__done h3{font-family:var(--heading,"Montserrat",sans-serif);font-weight:500;font-size:32px;letter-spacing:-.02em;margin-bottom:10px}
+.bk__done p{color:var(--muted,#5b6178);max-width:360px;margin:0 auto 24px}
+@keyframes bkDraw{to{stroke-dashoffset:0}}
+
+/* ---------- phones: compact button, dialog becomes a bottom sheet ---------- */
+@media (max-width:600px){
+  .bk-fab{height:52px;padding:0 18px 0 5px;font-size:14px;gap:10px}
+  .bk-fab__icon{width:42px;height:42px}
+  .bk{align-items:flex-end;padding:0}
+  .bk__panel{width:100%;max-height:92dvh;border-radius:24px 24px 0 0;transform:translateY(100%)}
+  .bk.is-open .bk__panel{transform:none}
+  .bk__row{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .bk-fab,.bk__panel,.bk__backdrop,.bk__form>*{transition:none}
+  .bk-fab__icon::after{animation:none}
+}
