@@ -102,7 +102,7 @@
   });
 
   /* ---------- floating button appears once the visitor scrolls ---------- */
-  const toggleFab = () => fab.classList.toggle('is-visible', scrollY > innerHeight * .6);
+  const toggleFab = () => root.classList.toggle('bk-fab-on', fab.classList.toggle('is-visible', scrollY > innerHeight * .6));
   addEventListener('scroll', toggleFab, { passive: true }); toggleFab();
 
   /* ---------- validation + submit ---------- */
