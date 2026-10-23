@@ -608,16 +608,39 @@ p{margin:0}
 /* home hero: enquiry card on the image; grows as the image expands (see main.js) */
 .hero__form{position:absolute;inset:0 clamp(16px,2.4vw,40px) 0 auto;margin:auto 0;height:fit-content;width:340px;z-index:4;padding:26px;border-radius:var(--radius);box-shadow:0 30px 70px -30px rgba(13,13,48,.5);transform-origin:right center}
 .hero__form h3{font-size:clamp(24px,2vw,30px);margin:8px 0 6px}
-.hero__form>p{font-size:13px;color:var(--muted);margin:0 0 6px}
-.hero__form .field{margin-bottom:22px}
-.hero__form .field input,.hero__form .field select{padding:22px 0 8px;font-size:15px}
-.hero__form .field label{top:22px;font-size:15px}
-.hero__form .check{font-size:12px;margin-bottom:18px;gap:10px}
+.hero__form>p{font-size:13px;color:var(--muted);margin:0 0 2px}
+.hero__form .field{margin-bottom:16px}
+.hero__form .field input,.hero__form .field select,.hero__form .dd__btn{padding:20px 0 7px;font-size:15px}
+.hero__form .form-row{gap:0 14px}
+.hero__form .dd__btn{font-size:14px}
+.hero__form .field label{top:20px;font-size:14px}
+.hero__form .check{font-size:12px;margin:4px 0 16px;gap:10px}
 .hero__form .btn{width:100%;justify-content:center}
 .hero__form .form-success{padding:36px 24px;justify-content:center}
 .hero__form .form-success>svg{width:64px;height:64px;margin-bottom:16px}
 .hero__form .form-success h3{font-size:30px}
 .hero__form .form-success p{font-size:14px;margin-bottom:20px}
+
+
+/* custom dropdowns — built from every .field <select> in main.js (the native select stays in sync for submitting) */
+.dd__native{position:absolute!important;width:1px!important;height:1px!important;opacity:0;pointer-events:none}
+.dd__btn{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:26px 0 10px;border:0;border-bottom:1px solid rgba(19,19,46,.22);background:none;font:inherit;font-size:16px;color:var(--ink);text-align:left;cursor:pointer}
+.dd__btn span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dd__btn svg{flex:none;width:12px;height:12px;transition:transform .5s var(--ease)}
+.dd.is-open .dd__btn svg{transform:rotate(180deg)}
+.dd__btn:focus-visible{outline:2px solid var(--clay);outline-offset:4px;border-radius:4px}
+.dd.is-open .field__bar{transform:scaleX(1)}
+.dd__list{position:absolute;left:-6px;right:-6px;top:calc(100% + 6px);z-index:30;margin:0;padding:6px;list-style:none;background:var(--white);border:1px solid rgba(19,19,46,.08);border-radius:14px;box-shadow:0 28px 56px -24px rgba(13,13,48,.4);max-height:264px;overflow:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top center;transition:opacity .2s,transform .45s var(--ease),visibility 0s .45s}
+.dd--up .dd__list{top:auto;bottom:calc(100% + 6px);transform:translateY(8px) scale(.98);transform-origin:bottom center}
+.dd.is-open .dd__list{opacity:1;visibility:visible;transform:none;transition:opacity .2s,transform .45s var(--ease)}
+.dd__list li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:10px;font-size:15px;line-height:1.3;color:var(--ink);cursor:pointer;outline:none;opacity:0;transform:translateY(-4px);transition:background .25s,color .25s,opacity .3s,transform .4s var(--ease)}
+.dd.is-open .dd__list li{opacity:1;transform:none;transition-delay:calc(var(--i) * 30ms)}
+.dd__list li:hover,.dd__list li:focus{background:var(--sand)}
+.dd__list li[aria-selected="true"]{color:var(--teal-deep);font-weight:600}
+.dd__list li svg{flex:none;width:14px;height:14px;opacity:0;transition:opacity .25s}
+.dd__list li[aria-selected="true"] svg{opacity:1}
+.form-card{overflow:visible}
+.form-success{border-radius:inherit}
 
 /* =========================================================
    RESPONSIVE

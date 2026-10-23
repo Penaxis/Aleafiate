@@ -17,6 +17,7 @@
      data-faq-search / data-faq-group / data-faq-cats   FAQ search + section nav
      data-profile    practitioner card → opens [data-drawer] with its <template>
      data-form       contact form validation + success state
+     .field select   becomes a custom animated dropdown (keyboard accessible)
      data-draw       vertical line draws while scrolling (process steps)
      data-journey    pricing stops: line draws and each stop lights up in turn
      data-offset     on an in-page link: stop this many px above the target
@@ -260,6 +261,66 @@
   }
 
   /* =========================================================
+     CUSTOM DROPDOWNS — every .field <select> becomes a styled listbox;
+     the native select stays (hidden) so forms submit as normal
+     ========================================================= */
+  const CHEV = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 4l4 4 4-4"/></svg>';
+  const TICK = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 7.2l2.8 2.8 6.2-6.5"/></svg>';
+  const dropdowns = [];
+  const closeAll = except => dropdowns.forEach(d => d !== except && d.close(false));
+  $$('.field select').forEach((sel, n) => {
+    const field = sel.closest('.field'), label = $('label', field), id = sel.id || `dd-${n}`;
+    const btn = document.createElement('button'), list = document.createElement('ul');
+    btn.type = 'button'; btn.className = 'dd__btn'; btn.id = `${id}-btn`;
+    btn.setAttribute('aria-haspopup', 'listbox'); btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', `${id}-list`);
+    list.className = 'dd__list'; list.id = `${id}-list`; list.setAttribute('role', 'listbox'); list.tabIndex = -1;
+    if (label) { label.htmlFor = btn.id; list.setAttribute('aria-label', label.textContent); }
+    sel.classList.add('dd__native'); sel.tabIndex = -1; sel.setAttribute('aria-hidden', 'true');
+    field.classList.add('dd'); sel.after(btn); field.append(list);
+    const renderList = () => {
+      list.innerHTML = [...sel.options].map((o, i) => `<li role="option" tabindex="-1" style="--i:${i}" data-i="${i}" aria-selected="${i === sel.selectedIndex}"><span>${o.text}</span>${TICK}</li>`).join('');
+    };
+    const render = () => {
+      const cur = sel.options[sel.selectedIndex];
+      btn.innerHTML = `<span>${cur ? cur.text : ''}</span>${CHEV}`;
+      renderList();
+    };
+    const items = () => $$('li', list);
+    const open = () => {
+      closeAll(d); renderList();
+      const r = btn.getBoundingClientRect(), need = Math.min(264, sel.options.length * 44 + 12) + 16;
+      field.classList.toggle('dd--up', innerHeight - r.bottom < need && r.top > need); // open upwards when there's no room below
+      field.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true');
+      (items()[sel.selectedIndex] || items()[0]).focus({ preventScroll: true });
+    };
+    const close = (refocus = true) => {
+      if (!field.classList.contains('is-open')) return;
+      field.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false');
+      if (refocus) btn.focus({ preventScroll: true });
+    };
+    const choose = i => {
+      if (i !== sel.selectedIndex) { sel.selectedIndex = i; sel.dispatchEvent(new Event('change', { bubbles: true })); }
+      close();
+    };
+    const d = { close };
+    dropdowns.push(d);
+    btn.addEventListener('click', () => field.classList.contains('is-open') ? close() : open());
+    btn.addEventListener('keydown', e => { if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) { e.preventDefault(); open(); } });
+    list.addEventListener('click', e => { const li = e.target.closest('li'); if (li) choose(+li.dataset.i); });
+    list.addEventListener('keydown', e => {
+      const all = items(), k = all.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); all[(k + (e.key === 'ArrowDown' ? 1 : -1) + all.length) % all.length].focus(); }
+      else if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); all[e.key === 'Home' ? 0 : all.length - 1].focus(); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (k > -1) choose(k); }
+      else if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'Tab') close(false);
+    });
+    sel.addEventListener('change', render);
+    render();
+  });
+  document.addEventListener('click', e => { if (!e.composedPath().some(n => n.classList && n.classList.contains('dd'))) closeAll(); });
+
+  /* =========================================================
      CONTACT: form validation + success state
      With an action="" URL (e.g. Formspree) the form is POSTed there;
      without one it opens the visitor's email app, addressed to data-mailto.
@@ -270,6 +331,7 @@
     if (pick && sel) {
       const opt = [...sel.options].find(o => o.value.startsWith(pick));
       opt ? (opt.selected = true) : sel.add(new Option(pick, pick, true, true));
+      sel.dispatchEvent(new Event('change'));
     }
     const rules = { email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), tel: v => v.replace(/\D/g, '').length >= 7 };
     const check = el => {

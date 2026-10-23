@@ -49,9 +49,16 @@
       <p>Leave your details and our team will call you back within one business day.</p>
       <form data-form data-mailto="admin@aleafiate.com.au" action="" method="post" novalidate>
         <div class="field"><input id="h-name" name="name" type="text" placeholder=" " required autocomplete="name"><label for="h-name">Full name *</label><span class="field__bar"></span><span class="field__err">Please enter your name</span></div>
-        <div class="field"><input id="h-phone" name="phone" type="tel" placeholder=" " required autocomplete="tel"><label for="h-phone">Phone *</label><span class="field__bar"></span><span class="field__err">Please enter a valid phone number</span></div>
-        <div class="field"><input id="h-email" name="email" type="email" placeholder=" " required autocomplete="email"><label for="h-email">Email *</label><span class="field__bar"></span><span class="field__err">Please enter a valid email</span></div>
-        <div class="field field--static"><select id="h-enquiry" name="enquiry"><option>Book a free discovery call</option><option>Book an initial consultation</option><option>Book a follow-up</option><option>Question about fees</option><option>Something else</option></select><label for="h-enquiry">How can we help?</label><span class="field__bar"></span></div>
+        <div class="form-row">
+          <div class="field"><input id="h-phone" name="phone" type="tel" placeholder=" " required autocomplete="tel"><label for="h-phone">Phone *</label><span class="field__bar"></span><span class="field__err">Enter a valid phone</span></div>
+          <div class="field"><input id="h-email" name="email" type="email" placeholder=" " required autocomplete="email"><label for="h-email">Email *</label><span class="field__bar"></span><span class="field__err">Enter a valid email</span></div>
+        </div>
+        <div class="field field--static"><select id="h-enquiry" name="enquiry"><option>Book a free discovery call</option><option>Book an initial consultation</option><option>Book a follow-up</option><option>Question about fees</option><option>Script or pharmacy enquiry</option><option>Something else</option></select><label for="h-enquiry">How can we help?</label><span class="field__bar"></span></div>
+        <div class="form-row">
+          <div class="field field--static"><select id="h-appointment" name="appointment"><option>Not sure yet</option><option>Telehealth</option><option>In clinic — Logan Central</option></select><label for="h-appointment">Appointment type</label><span class="field__bar"></span></div>
+          <div class="field field--static"><select id="h-time" name="time"><option>Any time</option><option>Morning (9am – 12pm)</option><option>Afternoon (12pm – 5pm)</option></select><label for="h-time">Best time to call</label><span class="field__bar"></span></div>
+        </div>
+        <div class="field field--static"><select id="h-practitioner" name="practitioner"><option>No preference</option><option>Dr Frank Guerrera</option><option>Jeremy Chou (Nurse Practitioner)</option></select><label for="h-practitioner">Practitioner</label><span class="field__bar"></span></div>
         <label class="check"><input type="checkbox" name="consent" value="yes" required><span>I agree to be contacted and have read the <a href="privacy-policy.html">Privacy Policy</a>. *</span></label>
         <button type="submit" class="btn" data-roll><span class="btn__fill"></span><span class="btn__label">Request a call</span><svg class="btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></button>
       </form>
