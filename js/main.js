@@ -267,7 +267,10 @@
   const form = $('[data-form]');
   if (form) {
     const pick = new URLSearchParams(location.search).get('with'), sel = $('[name="practitioner"]', form);
-    if (pick && sel) { sel.add(new Option(pick, pick, true, true)); }
+    if (pick && sel) {
+      const opt = [...sel.options].find(o => o.value.startsWith(pick));
+      opt ? (opt.selected = true) : sel.add(new Option(pick, pick, true, true));
+    }
     const rules = { email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), tel: v => v.replace(/\D/g, '').length >= 7 };
     const check = el => {
       const v = el.value.trim(), ok = el.type === 'checkbox' ? el.checked : v && (!rules[el.type] || rules[el.type](v));

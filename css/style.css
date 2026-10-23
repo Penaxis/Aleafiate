@@ -436,6 +436,8 @@ p{margin:0}
 .field__err{position:absolute;left:0;top:100%;font-size:12px;color:#a2482f;margin-top:6px;opacity:0;transition:opacity .3s}
 .field.is-error input,.field.is-error textarea{border-bottom-color:#a2482f}
 .field.is-error .field__err{opacity:1}
+.field__hint{font-size:13px;color:var(--muted);margin:-18px 0 26px}
+.check a{color:var(--ink);border-bottom:1px solid currentColor}
 .form-label{display:block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px;padding:0;list-style:none}
 .chip{position:relative}

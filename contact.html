@@ -33,7 +33,7 @@
   <div class="container">
     <div class="a-hero__top">
       <div><span class="eyebrow" data-up>Contact</span><h1 data-words style="margin-top:20px">Let’s start with a <em>conversation.</em></h1></div>
-      <p class="a-hero__sub" data-up>Book a consultation, ask a question, or just tell us what’s on your mind. A real person replies within one working day.</p>
+      <p class="a-hero__sub" data-up>Book a free call, ask a question about fees or appointments, or just tell us what’s on your mind. A real person from our team replies within one business day.</p>
     </div>
   </div>
 </section>
@@ -50,10 +50,10 @@
     </div>
 
     <div class="form-card" data-up>
-      <span class="eyebrow">Request a consultation</span>
-      <h2 data-lines>Tell us a little about you.</h2>
-      <p>Fields marked * are required. We’ll never share your details.</p>
-      <!-- To receive requests directly, set action="" to a form service URL (e.g. Formspree).
+      <span class="eyebrow">Send an enquiry</span>
+      <h2 data-lines>Tell us how we can help.</h2>
+      <p>Fields marked * are required. Your details are kept private and only used to respond to your enquiry.</p>
+      <!-- To receive enquiries directly, set action="" to a form service URL (e.g. Formspree).
            Without it, the form opens the visitor's email app addressed to data-mailto. -->
       <form data-form data-mailto="admin@aleafiate.com.au" action="" method="post" novalidate>
         <div class="form-row">
@@ -62,25 +62,30 @@
         </div>
         <div class="form-row">
           <div class="field"><input id="f-phone" name="phone" type="tel" placeholder=" " required autocomplete="tel"><label for="f-phone">Phone *</label><span class="field__bar"></span><span class="field__err">Please enter a valid phone number</span></div>
-          <div class="field field--static"><input id="f-date" name="date" type="date"><label for="f-date">Preferred date</label><span class="field__bar"></span></div>
+          <div class="field field--static"><select id="f-contact-method" name="contact-method"><option>Phone call</option><option>Email</option><option>Either is fine</option></select><label for="f-contact-method">Best way to contact you</label><span class="field__bar"></span></div>
         </div>
-        <span class="form-label">I’m interested in</span>
-        <ul class="chips"><li class="chip"><label><input type="checkbox" name="interest" value="First consultation"><span>First consultation</span></label></li><li class="chip"><label><input type="checkbox" name="interest" value="Facials"><span>Facials</span></label></li><li class="chip"><label><input type="checkbox" name="interest" value="Peels"><span>Peels</span></label></li><li class="chip"><label><input type="checkbox" name="interest" value="Microneedling"><span>Microneedling</span></label></li><li class="chip"><label><input type="checkbox" name="interest" value="Prescription treatments"><span>Prescription treatments</span></label></li><li class="chip"><label><input type="checkbox" name="interest" value="LED therapy"><span>LED therapy</span></label></li><li class="chip"><label><input type="checkbox" name="interest" value="Something else"><span>Something else</span></label></li></ul>
+        <span class="form-label">How can we help?</span>
+        <ul class="chips"><li class="chip"><label><input type="checkbox" name="enquiry" value="Book a free discovery call"><span>Book a free discovery call</span></label></li><li class="chip"><label><input type="checkbox" name="enquiry" value="Book an initial consultation"><span>Book an initial consultation</span></label></li><li class="chip"><label><input type="checkbox" name="enquiry" value="Book a follow-up"><span>Book a follow-up</span></label></li><li class="chip"><label><input type="checkbox" name="enquiry" value="Question about fees"><span>Question about fees</span></label></li><li class="chip"><label><input type="checkbox" name="enquiry" value="Script or pharmacy enquiry"><span>Script or pharmacy enquiry</span></label></li><li class="chip"><label><input type="checkbox" name="enquiry" value="Travel letter"><span>Travel letter</span></label></li><li class="chip"><label><input type="checkbox" name="enquiry" value="Something else"><span>Something else</span></label></li></ul>
         <div class="form-row">
-          <div class="field field--static"><select id="f-practitioner" name="practitioner"><option>No preference</option><option>A doctor</option><option>A nurse prescriber</option><option>A pharmacist prescriber</option></select><label for="f-practitioner">Practitioner</label><span class="field__bar"></span></div>
-          <div class="field field--static"><select id="f-time" name="time"><option>Any time</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select><label for="f-time">Time of day</label><span class="field__bar"></span></div>
+          <div class="field field--static"><select id="f-appointment" name="appointment"><option>Not sure yet</option><option>Telehealth</option><option>In clinic — Logan Central</option></select><label for="f-appointment">Appointment type</label><span class="field__bar"></span></div>
+          <div class="field field--static"><select id="f-practitioner" name="practitioner"><option>No preference</option><option>Dr Frank Guerrera</option><option>Jeremy Chou (Nurse Practitioner)</option></select><label for="f-practitioner">Practitioner</label><span class="field__bar"></span></div>
         </div>
-        <div class="field"><textarea id="f-message" name="message" placeholder=" " rows="4"></textarea><label for="f-message">Anything we should know?</label><span class="field__bar"></span></div>
-        <label class="check"><input type="checkbox" name="consent" value="yes" required><span>I agree to Aleafiate contacting me about this request. *</span></label>
+        <div class="form-row">
+          <div class="field field--static"><select id="f-time" name="time"><option>Any time</option><option>Morning (9am – 12pm)</option><option>Afternoon (12pm – 5pm)</option></select><label for="f-time">Best time to call</label><span class="field__bar"></span></div>
+          <div class="field field--static"><select id="f-area" name="area"><option>Prefer not to say</option><option>Pain &amp; physical discomfort</option><option>Sleep &amp; rest</option><option>Mental &amp; emotional wellbeing</option><option>Women’s health</option><option>Something else</option></select><label for="f-area">Area of care (optional)</label><span class="field__bar"></span></div>
+        </div>
+        <div class="field"><textarea id="f-message" name="message" placeholder=" " rows="4"></textarea><label for="f-message">Your message</label><span class="field__bar"></span></div>
+        <p class="field__hint">Please don’t include detailed medical information here — your practitioner will go through your health history privately during your intake and consultation.</p>
+        <label class="check"><input type="checkbox" name="consent" value="yes" required><span>I agree to Aleafiate Health Clinics contacting me about this enquiry, and I’ve read the <a href="privacy-policy.html">Privacy Policy</a>. *</span></label>
         <div class="form-foot">
-          <button type="submit" class="btn" data-roll><span class="btn__fill"></span><span class="btn__label">Send request</span><svg class="btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></button>
-          <small>We usually reply the same day.</small>
+          <button type="submit" class="btn" data-roll><span class="btn__fill"></span><span class="btn__label">Send enquiry</span><svg class="btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></button>
+          <small>We reply within one business day (Monday – Friday, 9am – 5pm).</small>
         </div>
       </form>
       <div class="form-success" aria-live="polite">
         <svg viewBox="0 0 84 84" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="42" cy="42" r="40"/><path d="M27 43l10 10 20-22"/></svg>
         <h3>Thank you.</h3>
-        <p data-success-note>We’ve received your request and will be in touch within one working day.</p>
+        <p data-success-note>We’ve received your enquiry and will be in touch within one business day.</p>
         <a href="index.html" class="btn btn--ghost" data-roll><span class="btn__fill"></span><span class="btn__label">Back to home</span><svg class="btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></a>
       </div>
     </div>
@@ -112,8 +117,8 @@
       <div data-up><a href="faq.html" class="btn btn--ghost" data-roll><span class="btn__fill"></span><span class="btn__label">All questions</span><svg class="btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12L12 4M5 4h7v7"/></svg></a></div>
     </div>
     <div class="acc" data-accordion data-stagger>
-        <div class="acc__item"><button class="acc__q"><span class="acc__num">01</span><span>Do I need a consultation before treatment?</span><span class="acc__icon" aria-hidden="true"></span></button><div class="acc__a"><div class="acc__inner"><p>Yes. Every new client starts with a 45-minute consultation, and prescription treatments always need an in-person assessment by a prescriber first.</p></div></div></div>
-        <div class="acc__item"><button class="acc__q"><span class="acc__num">02</span><span>How quickly will you reply?</span><span class="acc__icon" aria-hidden="true"></span></button><div class="acc__a"><div class="acc__inner"><p>We reply to every request within one working day, usually much sooner. If it’s urgent, please call.</p></div></div></div>
+        <div class="acc__item"><button class="acc__q"><span class="acc__num">01</span><span>Do I need a consultation before treatment?</span><span class="acc__icon" aria-hidden="true"></span></button><div class="acc__a"><div class="acc__inner"><p>Yes. Every new patient starts with a free discovery call, then an initial consultation with an AHPRA-registered practitioner — by telehealth or at our Logan Central clinic — before any treatment is considered.</p></div></div></div>
+        <div class="acc__item"><button class="acc__q"><span class="acc__num">02</span><span>How quickly will you reply?</span><span class="acc__icon" aria-hidden="true"></span></button><div class="acc__a"><div class="acc__inner"><p>We reply to every enquiry within one business day (Monday – Friday, 9am – 5pm). If it’s urgent, please call us on 07 3473 3396.</p></div></div></div>
         <div class="acc__item"><button class="acc__q"><span class="acc__num">03</span><span>Can I choose my practitioner?</span><span class="acc__icon" aria-hidden="true"></span></button><div class="acc__a"><div class="acc__inner"><p>Of course. Pick one in the form, or <a href="practitioners.html">browse the team</a> first and book from their profile.</p></div></div></div>
     </div>
   </div>
