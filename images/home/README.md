@@ -1,5 +1,7 @@
 # Homepage images — sizes and AI prompts
 
+Upload images for `index.html` here. (Practitioner photos go in `images/practitioners/`.)
+
 Generate each image, save it with the **exact file name** below into `images/home/`,
 and it appears on the homepage automatically. Until a file exists, its slot shows a
 labelled placeholder.
@@ -23,7 +25,7 @@ labelled placeholder.
 website to show or hint at prescription medicines, and that includes plant imagery that
 suggests them. AHPRA also requires that images don't mislead. So:
 
-- **Never use AI images of your real practitioners.** Dr Frank and Jeremy need real photos (`images/team/`).
+- **Never use AI images of your real practitioners.** Dr Frank and Jeremy need real photos (`images/practitioners/`).
 - **The clinic photos (section 5) should ideally be real photos of your clinic** at Logan Central Plaza. AI versions are fine as temporary stand-ins.
 - People in AI images should look like everyday Australians of different ages and backgrounds, and calm or comfortable, never unwell or in pain.
 
@@ -183,7 +185,7 @@ appears **in the centre** over it. Put the subject in the **left third**.
 
 | File | Size | Shape |
 |---|---|---|
-| `images/team/dr-frank-guerrera.jpg` | **1000 × 1250** | Portrait 4:5 — original photo to replace the screenshot crop |
-| `images/team/jeremy-chou.jpg` | **1000 × 1250** | Portrait 4:5 |
+| `images/practitioners/dr-frank-guerrera.jpg` | **1000 × 1250** | Portrait 4:5 — original photo to replace the screenshot crop |
+| `images/practitioners/jeremy-chou.jpg` | **1000 × 1250** | Portrait 4:5 |
 
 Use the same teal background as Dr Frank's photo so the team looks consistent.
