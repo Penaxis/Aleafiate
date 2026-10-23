@@ -377,16 +377,21 @@
     if ($('#hero')) {
       gsap.timeline({ defaults: { ease: 'expo.out' } })
         .from('[data-hero-media]', { clipPath: 'inset(0 0 0 100%)', duration: 1.6, ease: 'expo.inOut' })
-        .from('[data-hero-img]', { scale: 1.3, duration: 2 }, '<');
+        .from('[data-hero-img]', { scale: 1.3, duration: 2 }, '<')
+        .from('[data-hero-form]', { y: 40, autoAlpha: 0, duration: 1.2 }, '-=1.2');
       mm.add('(min-width: 992px)', () => {
         const st = SplitText.create('[data-hero-statement]', { type: 'words' });
         gsap.set(st.words, { autoAlpha: 0, yPercent: 40 });
-        gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=160%', scrub: .8, pin: true } })
+        const tl = gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=160%', scrub: .8, pin: true } })
           .to('.hero__content', { autoAlpha: 0, duration: .5, ease: 'none' }, 0)
           .to('[data-hero-media]', { width: '100%', duration: 1, ease: 'power2.inOut' }, 0)
           .to('[data-hero-img]', { scale: 1.12, duration: 1.6, ease: 'none' }, 0)
           .to('[data-hero-shade]', { opacity: 1, duration: .5 }, .6)
           .to(st.words, { autoAlpha: 1, yPercent: 0, stagger: .08, duration: .4, ease: 'power2.out' }, .8);
+        // enquiry card: grows with the image; photo starts shifted so the person stands left of the card
+        if ($('[data-hero-form]')) tl
+          .fromTo('[data-hero-form]', { width: 330, padding: 24, scale: .94 }, { width: 450, padding: 38, scale: 1, duration: 1, ease: 'power2.inOut' }, 0)
+          .fromTo('[data-hero-img]', { objectPosition: '72% 50%', xPercent: 0 }, { objectPosition: '50% 50%', xPercent: -6, duration: 1, ease: 'power2.inOut' }, 0);
         return () => st.revert();
       });
     }
