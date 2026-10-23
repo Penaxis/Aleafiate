@@ -30,7 +30,9 @@
 
   /* ---------- placeholders: hide label when a real image loads ---------- */
   $$('.media img').forEach(img => {
-    const mark = () => img.getAttribute('src') && img.naturalWidth && img.closest('.media').classList.add('has-img');
+    const clear = () => img.getAttribute('src') && img.setAttribute('src', ''); // missing file → keep the labelled placeholder
+    const mark = () => { if (!img.getAttribute('src')) return; img.naturalWidth ? img.closest('.media').classList.add('has-img') : clear(); };
+    img.addEventListener('error', clear);
     img.complete ? mark() : img.addEventListener('load', mark);
   });
   $$('[data-year]').forEach(e => e.textContent = new Date().getFullYear());

@@ -16,7 +16,7 @@ Fonts load from Google Fonts when online (falls back to Georgia / system font of
 - css/style.css — all styles (colours & fonts at the top in :root)
 - js/main.js — all animations (driven by data-attributes, see comment at top)
 - js/vendor/ — GSAP 3.13 (ScrollTrigger, SplitText, Draggable) + Lenis
-- images/ — put your images here
+- images/ — images; homepage image list, sizes and AI prompts in images/home/IMAGE-PROMPTS.md
 
 ## Adding images
 Every placeholder is `<img src="" alt="">` with a size label.
