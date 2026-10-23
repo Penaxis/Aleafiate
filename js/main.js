@@ -411,7 +411,7 @@
         scrollTrigger: inHero ? null : { trigger: el, start: 'top 85%' } });
     });
     $$('[data-letters]').forEach(el => {
-      const s = SplitText.create(el, { type: 'chars', mask: 'chars' });
+      const s = SplitText.create(el, { type: 'words,chars', mask: 'chars', wordsClass: 'split-word' }); // words keep letters together when lines wrap
       gsap.from(s.chars, { yPercent: 100, duration: 1.3, ease: 'expo.out', stagger: .035, scrollTrigger: { trigger: el, start: 'top 92%' } });
     });
 
